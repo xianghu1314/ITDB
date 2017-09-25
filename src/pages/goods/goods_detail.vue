@@ -81,9 +81,6 @@
                         <div class="weui-cell__ft">7人次</div>
                     </div>
                 </div>
-
-
-
             </div>
             <div class="tips" style="color: #f56600">图文详情</div>
             <div class="image-text">
