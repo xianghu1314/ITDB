@@ -159,7 +159,6 @@
 </script>
 <style>
     #home{
-        height: 100%;
     }
     #home div{
         box-sizing: border-box;

@@ -62,6 +62,9 @@
 
 <style lang="scss">
     .newOpen{
+        min-height: 100%;
+        background-color: #f5f5f5;
+
         .yellow{
             color: rgb(245, 102, 0);;
         }
@@ -69,16 +72,23 @@
             color:blue;
         }
         .weui-masonry{
+            min-height: 100%;
             column-count: 2; column-gap: 0;
-
             .weui-masonry-item{
+                background-color: white;
                 break-inside: avoid;
                 box-sizing: border-box;
                 padding: 10px;
                 box-sizing: border-box;
-                border: 1px solid #D9D9D9;
+                text-align: center;
+                &:nth-child(odd){
+                    margin: 0px 2.5px 5px 0px;
+                }
+                &:nth-child(even){
+                    margin: 0px 0px 5px 2.5px;
+                }
                 img{
-                    width: 100%;
+                    width: 80%;
                 }
                 p{
                     white-space: nowrap;
@@ -99,7 +109,8 @@
                         }
                         dd{
                             float: left;
-                            width: calc(50vw - 75px - 22px);
+                            width: calc(50vw - 75px - 25px);
+                            text-align: left;
                         }
                     }
                 }

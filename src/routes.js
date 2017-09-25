@@ -25,7 +25,7 @@ const addAddress = require('./pages/user/add-address.vue');
 const map = require('./pages/user/map.vue');
 
 export default new VueRouter({
-    mode: 'history',
+    //mode: 'history',
     routes: [
         { path: '*', component: NotFond },
         { path: '',redirect:"/home" },

@@ -89,7 +89,6 @@
         -moz-box-sizing: border-box;
         box-sizing: border-box;
     }
-    height:100%;
     .category-content{
         height:100%;
         .category-left{

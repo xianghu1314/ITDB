@@ -265,13 +265,11 @@
 
 <style lang="scss">
     .goodsDetail {
-
         .hidden {
             display: none;
         }
         background-color: #f1f1f1;
         position: relative;
-        height: 100%;
         .goods {
             margin: 0px 0;
             background-color: #fff;

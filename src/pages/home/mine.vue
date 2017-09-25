@@ -2,7 +2,7 @@
     <div class="mine">
         <div class="user-info">
             <div class="user-head">
-                <img src="https://team.weui.io/avatar/bear.jpg" alt="" @click="goToSetting()">
+                <img src="https://team.weui.io/avatar/bear.jpg" alt="" @click="goTo('/setting')">
             </div>
             <div class="user-name">
                 <!--<h4>陌冰曦</h4>-->
@@ -17,6 +17,9 @@
                 </div>
                 <div class="weui-cell__bd">
                     <p>余额</p>
+                </div>
+                <div class="weui-cell__ft">
+                    <span>120.00</span>
                 </div>
             </a>
             <a href="javascript:;" class="weui-cell weui-cell_access">
@@ -37,7 +40,7 @@
                     <p>夺宝记录</p>
                 </div>
             </a>
-            <a href="/lucky" class="weui-cell weui-cell_access">
+            <a @click="goTo('/lucky')" class="weui-cell weui-cell_access">
                 <div class="weui-cell__hd">
                     <i class="iconfont icon-zhongjiangjilu" style="background-color: #eeb468"></i>
                 </div>
@@ -45,7 +48,7 @@
                     <p>中奖记录</p>
                 </div>
             </a>
-            <a href="/address" class="weui-cell weui-cell_access">
+            <a @click="goTo('/address')"  class="weui-cell weui-cell_access">
                 <div class="weui-cell__hd">
                     <i class="iconfont icon-shouhuodizhi" style="background-color: #71c0c0"></i>
                 </div>
@@ -63,8 +66,8 @@
             return {}
         },
         methods: {
-            goToSetting:function () {
-                this.$router.push({ path:"/setting"})
+            goTo:function (path) {
+                this.$router.push(path)
             }
         },
         created: function () {

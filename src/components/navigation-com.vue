@@ -1,10 +1,10 @@
 <template>
     <div class="weui-flex">
         <div class="weui-flex__item" v-for="item in ItemList" >
-            <a v-bind:href="item.href"  class="weui-tabbar__item">
+            <router-link :to="item.href"  class="weui-tabbar__item">
                 <img :src="item.src" alt="" class="weui-tabbar__icon">
                 <p class="weui-tabbar__label">{{item.title}}</p>
-            </a>
+            </router-link>
         </div>
 
     </div>

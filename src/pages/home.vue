@@ -1,32 +1,36 @@
 <template>
     <div class="weui-tab">
         <div class="weui-tab__panel">
+            <div class="weui-tab__content">反馈页</div>
+            <div class="weui-tab__content">反馈页</div>
+            <div class="weui-tab__content">反馈页</div>
+            <div class="weui-tab__content">反馈页</div>
             <transition :name="transitionName">
                 <router-view></router-view>
             </transition>
         </div>
         <div class="weui-tabbar" id="navigation_tap">
-            <a href="javascript:;" class="weui-tabbar__item weui-bar__item_on">
+            <router-link :to="'/home/index'" class="weui-tabbar__item">
                 <!--<img src="../assets/logo.png" alt="" class="weui-tabbar__icon">-->
                 <i class="iconfont icon-jingxuan weui-tabbar__icon" ></i>
                 <p class="weui-tabbar__label">夺宝</p>
-            </a>
-            <a href="javascript:;" class="weui-tabbar__item">
+            </router-link>
+            <router-link :to="'/home/newOpen'" class="weui-tabbar__item">
                 <!--<img src="../assets/logo.png" alt="" class="weui-tabbar__icon">-->
                 <i class="iconfont icon-shijian weui-tabbar__icon"></i>
                 <p class="weui-tabbar__label">最新</p>
-            </a>
-            <a href="javascript:;" class="weui-tabbar__item">
+            </router-link>
+            <router-link :to="'/home/shopCart'" class="weui-tabbar__item">
                 <!--<img src="../assets/logo.png" alt="" class="weui-tabbar__icon">-->
                 <i class="iconfont icon-gouwuche weui-tabbar__icon"></i>
                 <p class="weui-tabbar__label">清单</p>
 
-            </a>
-            <a href="javascript:;" class="weui-tabbar__item">
+            </router-link>
+            <router-link :to="'/home/mine'" class="weui-tabbar__item">
                 <!--<img src="../assets/logo.png" alt="" class="weui-tabbar__icon">-->
                  <i class="iconfont icon-wode weui-tabbar__icon"></i>
                 <p class="weui-tabbar__label">我的</p>
-            </a>
+            </router-link>
         </div>
     </div>
 </template>
@@ -40,35 +44,31 @@
         },
         watch: {
             '$route' (to, from) {
-                const toDepth = to.path.split('/').length
-                const fromDepth = from.path.split('/').length
-                this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
+                //动画
+                const toDepth = to.path.split('/').length;
+                const fromDepth = from.path.split('/').length;
+                this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left';
+
             }
         },
         mounted:function () {
-            var self=this;
+            //根据地址判断选项
+            var path=this.$route.path;
+            var index=0;
+            if(path.indexOf("/home/index")>=0){
+                index=0
+            }
+            if(path.indexOf("/home/newOpen")>=0){
+                index=1
+            }
+            if(path.indexOf("/home/shopCart")>=0){
+                index=2
+            }
+            if(path.indexOf("/home/mine")>=0){
+                index=3
+            }
             weui.tab('#navigation_tap',{
-                defaultIndex: 0,
-                onChange: function(index){
-                    switch(index){
-                        case 0:{
-                            self.$router.push("/home/index");
-                            break;
-                        }
-                        case 1:{
-                            self.$router.push("/home/newOpen");
-                            break;
-                        }
-                        case 2:{
-                            self.$router.push("/home/shopCart");
-                            break;
-                        }
-                        case 3:{
-                            self.$router.push("/home/mine");
-                            break;
-                        }
-                    }
-                }
+                defaultIndex: index,
             });
         }
     }

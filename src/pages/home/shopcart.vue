@@ -8,10 +8,11 @@
             <scroller class="content-scr">
                 <div class="weui-cells weui-cells_checkbox">
                     <div @click="calcPrise()" class="weui-cell weui-check__label" v-for="(item ,index) in shopCarList" >
-                        <div class="weui-cell__hd" style="display: flex;align-items: center;">
+                        <label class="weui-cell__hd" v-bind:for="index" style="display: flex;align-items: center;">
                             <input type="checkbox" class="weui-check" name="checkbox1" v-bind:id="index" >
                             <i v-bind:class="{ hidden:ifEdit }" class="weui-icon-checked"></i>
-                            <img src="../../assets/logo.png" style="width:60px;margin-right:5px;display:block"/></div>
+                            <img src="../../assets/logo.png" style="width:60px;margin-right:5px;display:block"/>
+                        </label>
                         <label class="weui-cell__bd" v-bind:for="index">
                             <p>{{item.name}}</p>
                             <p style="font-size: 13px; color: rgb(136, 136, 136);">{{item.describe}}</p>
@@ -120,7 +121,6 @@
     .shopcart-page {
         position: relative;
         line-height: 44px;
-        height: 100%;
         box-sizing: border-box;
         padding: 44px 0px;
         .hidden{
@@ -167,7 +167,6 @@
             position: absolute;
             bottom: 0px;
             width: 100%;
-            border-top: 1px solid #c0bfc4;
             box-sizing: border-box;
             div{
                 height: 100%;
