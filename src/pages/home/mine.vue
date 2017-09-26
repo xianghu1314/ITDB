@@ -5,12 +5,11 @@
                 <img src="https://team.weui.io/avatar/bear.jpg" alt="" @click="goTo('/setting')">
             </div>
             <div class="user-name">
-                <!--<h4>陌冰曦</h4>-->
-                <a href="/login" class="user-login-btn">登陆/注册</a>
+                <!--<h4>陌冰git曦</h4>-->
+                <router-link :to="'/login'" class="user-login-btn">登陆/注册</router-link>
             </div>
         </div>
         <div class="weui-cells" >
-
             <a href="javascript:;" class="weui-cell weui-cell_access">
                 <div class="weui-cell__hd">
                     <i class="iconfont icon-icon" style="background-color: #cc3d4e"></i>

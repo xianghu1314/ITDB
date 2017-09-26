@@ -84,6 +84,7 @@
 
 <style lang="scss">
 .category{
+    height:100%;
     div:{
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;

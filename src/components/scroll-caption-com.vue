@@ -1,6 +1,6 @@
 <template>
     <div  class="weui-flex scroll_caption">
-        <div class="scroll_title"><router-link to="category">幸运之星</router-link></div>
+        <div class="scroll_title"><i class="iconfont icon-tongzhi"></i></div>
         <div class="weui-flex__item" >
             <ul class="scroll-ul" v-bind:style="{top:top}">
                 <li class="scroll-li" v-for="item in ItemList">{{item.title}}</li>
@@ -59,7 +59,11 @@
      line-height: 44px;
  }
  .scroll_caption .scroll_title{
-     padding: 0 10px;
+     padding: 0 5px 0 10px;
+ }
+ .scroll_caption .scroll_title i{
+     color: coral;
+     font-style: 23px;
  }
  .scroll_caption .weui-flex__item{
      overflow: hidden;
@@ -77,5 +81,6 @@
 }
 .scroll-ul > .scroll-li{
     height: 44px;
+    font-size: 14px;
 }
 </style>

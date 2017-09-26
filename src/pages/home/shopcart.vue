@@ -2,7 +2,7 @@
     <div class="shopcart-page">
         <div class="header">
             <div class="title">购物车</div>
-            <div class="header-right" @click="edit()">编辑</div>
+            <i class="iconfont icon-changyonggoupiaorenbianji header-right" @click="edit"></i>
         </div>
         <div class="content">
             <scroller class="content-scr">
@@ -123,6 +123,7 @@
         line-height: 44px;
         box-sizing: border-box;
         padding: 44px 0px;
+        height:100%;
         .hidden{
            display: none;
         }
@@ -136,17 +137,19 @@
             top: 0px;
             width: 100%;
             text-align: center;
-            border-bottom: 1px solid #c0bfc4;
+            border-bottom: 1px solid #e5e5e5;
             .title {
-                flex: 1;
+                width: 100%;
                 line-height: 44px;
             }
             .header-right {
                 padding: 0px 10px;
+                position: absolute;
+                right: 0px;
             }
         }
         .content {
-
+            height:100%;
             .content-scr {
                 position: inherit;
                 .weui-flex__item {
