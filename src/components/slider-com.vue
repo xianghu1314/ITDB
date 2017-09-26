@@ -1,13 +1,8 @@
 <!-- The ref attr used to find the swiper instance -->
 <template>
-    <swiper :options="swiperOption" :not-next-tick="notNextTick" ref="mySwiper">
-        <!-- slides -->
-        <swiper-slide v-for="banner in banners"><img :src="banner"></swiper-slide>
-        <!-- Optional controls -->
-        <div class="swiper-pagination"  slot="pagination"></div>
-        <!--<div class="swiper-button-prev" slot="button-prev"></div>-->
-        <!--<div class="swiper-button-next" slot="button-next"></div>-->
-        <!--<div class="swiper-scrollbar"   slot="scrollbar"></div>-->
+    <swiper :options="swiperOption" class="swiper-box" :not-next-tick="true" ref="mySwiper">
+        <swiper-slide class="swiper-item" v-for="banner in banners"><img :src="banner"></swiper-slide>
+        <div class="swiper-pagination" slot="pagination"></div>
     </swiper>
 </template>
 
@@ -17,17 +12,14 @@
         name: 'carrousel',
         data() {
             return {
-                // NotNextTick is a component's own property, and if notNextTick is set to true, the component will not instantiate the swiper through NextTick, which means you can get the swiper object the first time (if you need to use the get swiper object to do what Things, then this property must be true)
-                // notNextTick是一个组件自有属性，如果notNextTick设置为true，组件则不会通过NextTick来实例化swiper，也就意味着你可以在第一时间获取到swiper对象，假如你需要刚加载遍使用获取swiper对象来做什么事，那么这个属性一定要是true
-                notNextTick: true,
                 swiperOption: {
-                    // swiper optionss 所有的配置同swiper官方api配置
                     autoplay: 3000,
-                    direction : 'horizontal',//horizontal  vertical
-                    setWrapperSize :true,
-                    autoHeight: true,
-                    pagination : '.swiper-pagination',
-                    paginationClickable :true,
+                    pagination: '.swiper-pagination',
+                    direction: 'horizontal',
+                    slidesPerView: 1,
+                    paginationClickable: true,
+                    spaceBetween: 30,
+                    mousewheelControl: true,
                     observeParents:true,
                 },
                 banners: [ '../img/slider.jpg', '../img/slider.jpg', '../img/slider.jpg' ],
@@ -49,3 +41,29 @@
         }
     }
 </script>
+<style>
+    .swiper-box {
+        width: 100%;
+        height: 100%;
+        margin: 0 auto;
+    }
+    .swiper-item {
+        height: 100%;
+        text-align: center;
+        font-size: 18px ;
+        background: #fff;
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+    }
+</style>

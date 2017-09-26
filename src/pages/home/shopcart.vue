@@ -2,18 +2,18 @@
     <div class="shopcart-page">
         <div class="header">
             <div class="title">购物车</div>
-            <i class="iconfont icon-changyonggoupiaorenbianji header-right" @click="edit"></i>
+            <i class="iconfont icon-changyonggoupiaorenbianji header-right" @click="edit">&nbsp;{{ifEdit==false?"编辑":"完成"}}</i>
+
         </div>
         <div class="content">
             <scroller class="content-scr">
                 <div class="weui-cells weui-cells_checkbox">
                     <div @click="calcPrise()" class="weui-cell weui-check__label" v-for="(item ,index) in shopCarList" >
-                        <label class="weui-cell__hd" v-bind:for="index" style="display: flex;align-items: center;">
+                        <label class="weui-cell__hd select-hd" v-bind:for="index" >
                             <input type="checkbox" class="weui-check" name="checkbox1" v-bind:id="index" >
-                            <i v-bind:class="{ hidden:ifEdit }" class="weui-icon-checked"></i>
-                            <img src="../../assets/logo.png" style="width:60px;margin-right:5px;display:block"/>
+                            <i  class="weui-icon-checked"></i><img src="../../assets/logo.png" />
                         </label>
-                        <label class="weui-cell__bd" v-bind:for="index">
+                        <label class="weui-cell__bd" v-bind:for="index" style="padding-left: 5px">
                             <p>{{item.name}}</p>
                             <p style="font-size: 13px; color: rgb(136, 136, 136);">{{item.describe}}</p>
                         </label>
@@ -30,12 +30,12 @@
         </div>
         <div class="footer">
             <div class="weui-cells weui-cells_checkbox">
-                <label class="weui-cell weui-check__label" for="all" @click="calcPrise()">
-                    <div class="weui-cell__hd" >
-                        <input  type="checkbox" id="all" class="weui-check" name="checkbox1"  >
-                        <i @click="selectAll()" class="weui-icon-checked"></i>
+                <div class="weui-cell weui-check__label"  >
+                    <label class="weui-cell__hd" for="all" >
+                        <input  type="checkbox" id="all" class="weui-check" name="checkbox1"  @click="selectAll">
+                        <i  class="weui-icon-checked"></i>
                         <span>全选</span>
-                    </div>
+                    </label>
                     <div class="weui-cell__bd">
                           合计<span style="color: #f9650b">￥<span style="font-weight: 700;font-size: 20px" >{{totalPrise}}</span></span>
                     </div>
@@ -49,7 +49,7 @@
                             </div>
                         </transition>
                     </div>
-                </label>
+                </div>
             </div>
         </div>
     </div>
@@ -81,24 +81,33 @@
             },
             edit:function () {
                 this.ifEdit=!this.ifEdit;
-            },
-            selectAll:function () {
-                this.edit();
                 var checkbox=document.getElementsByTagName("input");
                 for(var i=0;i<checkbox.length-1;i++) {
-                    checkbox[i].checked = true;
-
+                    checkbox[i].checked = false;
                 }
+            },
+            selectAll:function () {
+                var checkbox=document.getElementsByTagName("input");
+                var ifSelect=false;
+
+                for(var i=0;i<checkbox.length-1;i++) {
+                    if(checkbox[i].checked == false){
+                        ifSelect=true;
+                        break;
+                    };
+                }
+                for(var i=0;i<checkbox.length-1;i++) {
+                    checkbox[i].checked=ifSelect;
+                }
+                this.calcPrise();
             },
             calcPrise:function () {
                 var self=this;
                 var total=0;
-                if(!self.ifEdit){
-                    var checkbox=document.getElementsByTagName("input");
-                    for(var i=0;i<checkbox.length-1;i++) {
-                        if(checkbox[i].checked == 1){
-                            total+=self.shopCarList[i].num*self.shopCarList[i].prise;
-                        }
+                var checkbox=document.getElementsByTagName("input");
+                for(var i=0;i<checkbox.length-1;i++) {
+                    if(checkbox[i].checked == true){
+                        total+=self.shopCarList[i].num*self.shopCarList[i].prise;
                     }
                 }
                 self.totalPrise= total;
@@ -146,10 +155,20 @@
                 padding: 0px 10px;
                 position: absolute;
                 right: 0px;
+                top:0px;
             }
         }
         .content {
             height:100%;
+            .select-hd{
+                display:-webkit-box;
+                display:-webkit-flex;
+                display:flex;
+                align-items: center;
+                img{
+                    width:60px; height: 60px
+                }
+            }
             .content-scr {
                 position: inherit;
                 .weui-flex__item {

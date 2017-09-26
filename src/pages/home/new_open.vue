@@ -77,15 +77,15 @@
             .weui-masonry-item{
                 background-color: white;
                 break-inside: avoid;
-                box-sizing: border-box;
                 padding: 10px;
-                box-sizing: border-box;
                 text-align: center;
+                border-bottom: 5px solid #f5f5f5;;
                 &:nth-child(odd){
-                    margin: 0px 2.5px 5px 0px;
+                    margin-right: 2.5px;
                 }
                 &:nth-child(even){
-                    margin: 0px 0px 5px 2.5px;
+                    margin-left: 2.5px;
+
                 }
                 img{
                     width: 80%;

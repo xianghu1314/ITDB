@@ -298,7 +298,9 @@
                 }
             }
             .information {
-                display: flex;
+                display:-webkit-box;
+                display:-webkit-flex;
+                display:flex;
                 .item {
                     flex: 1;
                     text-align: center;
