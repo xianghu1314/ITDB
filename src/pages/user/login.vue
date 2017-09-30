@@ -8,29 +8,31 @@
 
             <div class="login-form">
                 <transition name="slide-fade" mode="out-in">
+                    <!--登陆-->
                     <div v-if="loginType==1" class="weui-cells weui-cells_form" key="login">
                         <div class="weui-cell weui-cell_vcode" style="line-height: 45px;">
                             <div class="weui-cell__hd">
                                 <label class="weui-label">手机号</label>
                             </div>
                             <div class="weui-cell__bd">
-                                <input class="weui-input" type="tel" placeholder="请输入手机号">
+                                <input class="weui-input" v-model="phone" type="tel" placeholder="请输入手机号">
                             </div>
                         </div>
                         <div class="weui-cell weui-cell_vcode">
                             <div class="weui-cell__hd"><label class="weui-label">密码</label></div>
                             <div class="weui-cell__bd">
-                                <input class="weui-input" type="password" placeholder="请输入密码">
+                                <input class="weui-input" v-model="pwd" type="password" placeholder="请输入密码">
                             </div>
                             <div class="weui-cell__ft">
                                 <button class="weui-vcode-btn" @click="switchPWD">忘记密码</button>
                             </div>
                         </div>
                         <div class="weui-cell weui_btn_area" style="text-align: center;display: block">
-                            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary">登陆</a>
+                            <a href="javascript:;" @click="Login" class="weui-btn weui-btn_mini weui-btn_primary">登陆</a>
                             <a href="javascript:;" @click="switchZhuCe()" class="weui-btn weui-btn_mini weui-btn_warn">注册</a>
                         </div>
                     </div>
+                    <!--注册-->
                     <div v-else-if="loginType==2" class="weui-cells weui-cells_form" key="zhuce">
                         <div class="weui-cell weui-cell_vcode" style="line-height: 45px;">
                             <div class="weui-cell__hd">
@@ -54,7 +56,8 @@
                             <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_warn">注册</a>
                         </div>
                     </div>
-                    <div  class="weui-cells weui-cells_form" key="password" v-else>
+                    <!--找回-->
+                    <div class="weui-cells weui-cells_form" key="password" v-else>
                         <div class="weui-cell weui-cell_vcode" style="line-height: 45px;">
                             <div class="weui-cell__hd">
                                 <label class="weui-label">手机号</label>
@@ -113,10 +116,14 @@
 </template>
 
 <script>
+    import Vue from 'vue'
+
     export default {
         data() {
             return {
                 loginType: 1,//1登陆，2注册，3找回密码
+                phone: '',
+                pwd: ''
             }
         },
         methods: {
@@ -129,6 +136,41 @@
             switchPWD: function () {
                 this.loginType = 3;
             },
+            Login: function () {
+                if (this.phone == '') {
+                    weui.topTips('手机号不能为空', 2000);
+                    return;
+                }
+                if (this.pwd == '') {
+                    weui.topTips('密码不能为空', 2000);
+                    return;
+                }
+                this.$http.get('user/token', {
+                    params: {
+                        UserPhone: this.phone,
+                        UserPwd: this.pwd
+                    },
+                }).then(response => {
+                    // get body data
+                    debugger
+                    var data = response.body;
+                    if (data.status) {
+                        var token = 'bearer ' + data.data.token;
+                        Vue.http.headers.common['Authorization'] = token;
+                        localStorage.setItem("token", token)
+                        weui.toast(data.message, 3000);
+                        this.$router.push("/home/mine")
+
+                    } else {
+                        weui.topTips(data.message, 3000);
+                    }
+                }, response => {
+                    // error callback
+                    debugger
+
+                    weui.topTips("未知错误", 3000);
+                });
+            }
         },
         created: function () {
 
@@ -169,9 +211,9 @@
             padding-bottom: 100px;
             box-sizing: border-box;
             .login-form {
-                .weui-cells{
+                .weui-cells {
                     line-height: 50px;
-                    .weui-label{
+                    .weui-label {
                         width: 75px;
                     }
                 }
