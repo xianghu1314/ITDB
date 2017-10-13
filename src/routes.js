@@ -13,6 +13,7 @@ const Search = require('./pages/goods/search.vue');
 const GoodsList = require('./pages/goods/goods_list.vue');
 const goodsDetail = require('./pages/goods/goods_detail.vue');
 const wxPaySuccess = require('./pages/pay/wxpay_success.vue');
+const paymentMode = require('./pages/pay/payment_mode.vue');
 const newOpen = require('./pages/home/new_open.vue');
 const setting = require('./pages/user/setting.vue');
 const login = require('./pages/user/login.vue');
@@ -23,6 +24,11 @@ const helpInfo = require('./pages/help/info.vue');
 const address = require('./pages/user/address.vue');
 const addAddress = require('./pages/user/add-address.vue');
 const map = require('./pages/user/map.vue');
+const purchaseHistory = require('./pages/user/purchase-history.vue');
+
+
+
+
 
 export default new VueRouter({
     //mode: 'history',
@@ -44,6 +50,7 @@ export default new VueRouter({
         { path: '/goodsList', component: GoodsList },
         { path: '/goodsDetail', component: goodsDetail },
         { path: '/wxPaySuccess', component:wxPaySuccess },
+        { path: '/paymentMode',name:'paymentMode', component:paymentMode },
         { path: '/setting',component:setting },
         { path: '/login',component:login },
         { path: '/lucky',component:lucky },
@@ -52,8 +59,9 @@ export default new VueRouter({
             { path: 'info/:id',component: helpInfo },
         ] },
         { path: '/address',component:address },
-        { path: '/addAddress',component:addAddress },
+        { path: '/addAddress',name:"addAddress",component:addAddress },
         { path: '/selectMap',component:map },
+        { path: '/purchaseHistory',component:purchaseHistory },
 
     ]
 });

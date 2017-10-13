@@ -17,7 +17,7 @@
             <div class="weui-flex__item category-right">
                 <scroller class="category-right-scr">
                     <div class="banner">
-                        <img src="../../../img/slider.jpg" height="360" width="720"/>
+                        <img v-bind:src="current.bannerLogo"  />
                     </div>
                     <div class="weui-loadmore weui-loadmore_line" style="margin-bottom: 0">
                         <span class="weui-loadmore__tips">{{current.name}}</span>
@@ -44,14 +44,16 @@
     export default {
         data() {
             return {
-                current: '手机',
+                current: {},
                 category: [],
-                categoryChild: [{logo: "../img/logo.png", name: "测试", id: 1}]
+                categoryChild: []
             }
         },
         methods: {
             setCurrent: function (item) {
-                this.current = item;
+                var self=this;
+                self.current = item;
+                self.categoryChild=self.$Enumerable.From(self.category).Where(i=>i.parentCategoryID==item.id).ToArray();
             },
             gotogoodslist: function (id) {
                 this.$router.push({path: "/goodsList", query: {cid: id}});
@@ -59,25 +61,27 @@
         },
         created: function () {
             var self = this;
-            this.$http.get("Category/GetCategory").then(response => {
-                this.category = response.body.data;
+            self.$http.get("Category/GetCategory").then(response => {
+                self.category = response.body.data;
+                var current=self.$Enumerable.From(self.category).First();
+                self.setCurrent(current);
             })
         },
-        mounted: {
-            "categoryRoot":function () {
+        mounted() {
 
+        }
+        ,
+        computed: {
+            "categoryRoot": function () {
+                return this.$Enumerable.From(this.category).Where(function (x) {
+                    return x.parentCategoryID == null
+                }).ToArray();
             }
         },
-        computed: {},
         components: {
             searchCom
         },
-        watch: {
-            "current"(to, from) {
-                this.categoryChild.push({logo: "../img/logo.png", name: "测试", id: 1});
 
-            }
-        }
     }
 </script>
 
@@ -117,7 +121,7 @@
                     width: 100%;
                     height: calc((100vw - 100px) * 0.382);
                     overflow: hidden;
-                    border-radius: 5px;
+                    border-radius: 15px;
                     z-index: 100;
                     img {
                         transform: translate(-50%, -50%);
@@ -125,7 +129,7 @@
                         top: 50%;
                         left: 50%;
                         position: absolute;
-
+                        width: 100%;
                     }
                 }
                 .weui-grids {

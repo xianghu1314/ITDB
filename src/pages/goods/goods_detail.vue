@@ -1,24 +1,24 @@
 <template>
     <div class="goodsDetail">
         <div style="padding-bottom: 40px;height: 100%;overflow: auto;box-sizing: border-box">
-            <slider-com></slider-com>
+            <slider-com :images="goods.goodsLogo2"></slider-com>
             <div class="goods">
-                <p class="title">小米笔记本Air2.5"4G+128G</p>
-                <p class="describe">轻薄机身超长待机，支持快充，oled高清显示屏，贴合屏，至尊宝</p>
+                <p class="title">{{goods.goodsName}}</p>
+                <p class="describe">{{goods.goodsDescribe}}</p>
                 <div class="progress">
-                    <div class="progressBar" style="width: 20%"></div>
+                    <div class="progressBar" :style="{'width':(goods.needNum-goods.overplusNum)/goods.needNum*100+'%' }"></div>
                 </div>
                 <div class="information">
                     <div class="item">
-                        <p>90</p>
+                        <p>{{goods.needNum}}</p>
                         <p>总需</p>
                     </div>
                     <div class="item">
-                        <p>25</p>
+                        <p>{{goods.needNum - goods.overplusNum}}</p>
                         <p>已参与</p>
                     </div>
                     <div class="item">
-                        <p>65</p>
+                        <p>{{goods.overplusNum}}</p>
                         <p>剩余</p>
                     </div>
                 </div>
@@ -83,124 +83,23 @@
                 </div>
             </div>
             <div class="tips" style="color: #f56600">图文详情</div>
-            <div class="image-text">
-                <ul>
-                    <li>
-                        <div>
-                            <div class="img"><img class="lazy"
-                                                  data-original="//i8.mifile.cn/v1/a1/27f06beb-e56c-32a8-e056-015f0ac7702f!720x7200.jpg"
-                                                  src="//i8.mifile.cn/v1/a1/27f06beb-e56c-32a8-e056-015f0ac7702f!720x7200.jpg"
-                                                  style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
-                            </div><!--vue-if--><!--vue-if--></div><!--vue-if--></li>
-                    <li>
-                        <div>
-                            <div class="img"><img class="lazy"
-                                                  data-original="//i8.mifile.cn/v1/a1/d37f7902-df32-4e24-d36c-7260cd6811bf!720x7200.jpg"
-                                                  src="//i8.mifile.cn/v1/a1/d37f7902-df32-4e24-d36c-7260cd6811bf!720x7200.jpg"
-                                                  style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
-                            </div><!--vue-if--><!--vue-if--></div><!--vue-if--></li>
-                    <li>
-                        <div>
-                            <div class="img"><img class="lazy"
-                                                  data-original="//i8.mifile.cn/v1/a1/2c2a01c0-544e-4b89-9541-66d300674cd8!720x7200.jpg"
-                                                  src="//i8.mifile.cn/v1/a1/2c2a01c0-544e-4b89-9541-66d300674cd8!720x7200.jpg"
-                                                  style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
-                            </div><!--vue-if--><!--vue-if--></div><!--vue-if--></li>
-                    <li>
-                        <div style="">
-                            <div class="img"><img class="lazy"
-                                                  data-original="//i8.mifile.cn/v1/a1/6ec85fc4-5c91-cec6-cef3-83cc7eb9e411!720x7200.jpg"
-                                                  src="//i8.mifile.cn/v1/a1/6ec85fc4-5c91-cec6-cef3-83cc7eb9e411!720x7200.jpg"
-                                                  style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
-                            </div><!--vue-if--><!--vue-if--></div><!--vue-if--></li>
-                    <li>
-                        <div style="">
-                            <div class="img"><img class="lazy"
-                                                  data-original="//i8.mifile.cn/v1/a1/0fb4fd3f-9582-f32c-8baf-39629436d076!720x7200.jpg"
-                                                  src="//i8.mifile.cn/v1/a1/0fb4fd3f-9582-f32c-8baf-39629436d076!720x7200.jpg"
-                                                  style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
-                            </div><!--vue-if--><!--vue-if--></div><!--vue-if--></li>
-                    <li>
-                        <div style="">
-                            <div class="img"><img class="lazy"
-                                                  data-original="//i8.mifile.cn/v1/a1/b6be02cf-49db-a68d-a27a-4c131865d1a0!720x7200.jpg"
-                                                  src="//i8.mifile.cn/v1/a1/b6be02cf-49db-a68d-a27a-4c131865d1a0!720x7200.jpg"
-                                                  style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
-                            </div><!--vue-if--><!--vue-if--></div><!--vue-if--></li>
-                    <li>
-                        <div style="">
-                            <div class="img"><img class="lazy"
-                                                  data-original="//i8.mifile.cn/v1/a1/b4e68282-bd63-dd47-97be-9c0312a286b4!720x7200.jpg"
-                                                  src="//i8.mifile.cn/v1/a1/b4e68282-bd63-dd47-97be-9c0312a286b4!720x7200.jpg"
-                                                  style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
-                            </div><!--vue-if--><!--vue-if--></div><!--vue-if--></li>
-                    <li>
-                        <div style="">
-                            <div class="img"><img class="lazy"
-                                                  data-original="//i8.mifile.cn/v1/a1/68ee4425-4663-571d-78e8-e5d3b2ed02a9!720x7200.jpg"
-                                                  src="//i8.mifile.cn/v1/a1/68ee4425-4663-571d-78e8-e5d3b2ed02a9!720x7200.jpg"
-                                                  style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
-                            </div><!--vue-if--><!--vue-if--></div><!--vue-if--></li>
-                    <li>
-                        <div style="">
-                            <div class="img"><img class="lazy"
-                                                  data-original="//i8.mifile.cn/v1/a1/f3b7e91b-37cb-29b5-d42f-0a1368e6956d!720x7200.jpg"
-                                                  src="//i8.mifile.cn/v1/a1/f3b7e91b-37cb-29b5-d42f-0a1368e6956d!720x7200.jpg"
-                                                  style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
-                            </div><!--vue-if--><!--vue-if--></div><!--vue-if--></li>
-                    <li>
-                        <div style="">
-                            <div class="img"><img class="lazy"
-                                                  data-original="//i8.mifile.cn/v1/a1/5631b700-9ce9-b7fe-202d-0eab1ce5a828!720x7200.jpg"
-                                                  src="//i8.mifile.cn/v1/a1/5631b700-9ce9-b7fe-202d-0eab1ce5a828!720x7200.jpg"
-                                                  style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
-                            </div><!--vue-if--><!--vue-if--></div><!--vue-if--></li>
-                    <li>
-                        <div style="">
-                            <div class="img"><img class="lazy"
-                                                  data-original="//i8.mifile.cn/v1/a1/b35e46f1-19f9-33d2-4fc0-57811637ca70!720x7200.jpg"
-                                                  src="//i8.mifile.cn/v1/a1/b35e46f1-19f9-33d2-4fc0-57811637ca70!720x7200.jpg"
-                                                  style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
-                            </div><!--vue-if--><!--vue-if--></div><!--vue-if--></li>
-                    <li>
-                        <div style="">
-                            <div class="img"><img class="lazy"
-                                                  data-original="//i8.mifile.cn/v1/a1/6bb4ab43-756c-d6e3-08e1-ebdf1952b141!720x7200.jpg"
-                                                  src="//i8.mifile.cn/v1/a1/6bb4ab43-756c-d6e3-08e1-ebdf1952b141!720x7200.jpg"
-                                                  style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
-                            </div><!--vue-if--><!--vue-if--></div><!--vue-if--></li>
-                    <li>
-                        <div style="">
-                            <div class="img"><img class="lazy"
-                                                  data-original="//i8.mifile.cn/v1/a1/950f7469-2d72-05ff-a99c-b0acf6905c83!720x7200.jpg"
-                                                  src="//i8.mifile.cn/v1/a1/950f7469-2d72-05ff-a99c-b0acf6905c83!720x7200.jpg"
-                                                  style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
-                            </div><!--vue-if--><!--vue-if--></div><!--vue-if--></li>
-                    <li>
-                        <div style="">
-                            <div class="img"><img class="lazy"
-                                                  data-original="//i8.mifile.cn/v1/a1/4cabe09b-5368-d4cb-1431-239060991899!720x7200.jpg"
-                                                  src="//i8.mifile.cn/v1/a1/4cabe09b-5368-d4cb-1431-239060991899!720x7200.jpg"
-                                                  style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
-                            </div><!--vue-if--><!--vue-if--></div><!--vue-if--></li>
-                    <li>
-                        <div style="">
-                            <div class="img"><img class="lazy"
-                                                  data-original="//i8.mifile.cn/v1/a1/9b8a5941-b3a4-d067-799a-6013de5045f2!720x7200.jpg"
-                                                  src="//i8.mifile.cn/v1/a1/9b8a5941-b3a4-d067-799a-6013de5045f2!720x7200.jpg"
-                                                  style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
-                            </div><!--vue-if--><!--vue-if--></div><!--vue-if--></li>
-                    <li>
-                        <div style="">
-                            <div class="img"><img class="lazy"
-                                                  data-original="//i8.mifile.cn/v1/a1/a0cefb7d-f383-a370-590d-151a52657e1d!720x7200.jpg"
-                                                  src="//i8.mifile.cn/v1/a1/a0cefb7d-f383-a370-590d-151a52657e1d!720x7200.jpg"
-                                                  style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
-                            </div><!--vue-if--><!--vue-if--></div><!--vue-if--></li><!--v-repeat-tabContent--></ul>
+            <div class="image-text" v-html="goods.goodsDetail">
+                <!--商品详情-->
             </div>
         </div>
-        <div class="bottom" @click="openActionSheet">
-            <span>我要参与</span>
+        <div class="bottom">
+            <div class="weui-flex">
+                <div style="width: 80px;border-right: 1px solid #ddd;" @click="goToHome"><i
+                        class="iconfont icon-shouye"></i> 首页
+                </div>
+                <div style="width: 80px" @click="goToShopCart"><i class="iconfont icon-gouwuche"></i> 购物车</div>
+                <div class="weui-actionsheet__cell weui-flex__item" style="background-color:#fa0;padding: 1.5px 0;"
+                     @click="openActionSheet('join')">加入购物车
+                </div>
+                <div class="weui-actionsheet__cell weui-flex__item" style="background-color:#f60;padding: 1.5px 0;"
+                     @click="openActionSheet('now')">立即购买
+                </div>
+            </div>
         </div>
         <div id="actionSheet_wrap">
             <div class="weui-mask weui-mask_transparent actionsheet__mask" v-bind:class="{'hidden':actionSheet==false}"
@@ -211,18 +110,22 @@
                 </div>
                 <div class="weui-actionsheet__menu">
                     <div class="join">
-                        <div><span>-</span><span style="padding:8px 40px">0</span><span>+</span></div>
+                        <div><span @click="sub">-</span><span style="padding:6px 40px">{{selectNum}}</span><span
+                                @click="add">+</span></div>
                     </div>
                     <div class="tips">每参与1人次，需要1元</div>
                     <div class="join">
                         <div>
-                            <span>5</span><span>10</span><span>20</span><span>50</span><span>100</span>
+                            <span @click="setNum(5)">5</span><span @click="setNum(10)">10</span><span
+                                @click="setNum(20)">20</span><span @click="setNum(50)">50</span><span
+                                @click="setNum(100)">100</span>
                         </div>
                     </div>
                 </div>
                 <div class="weui-actionsheet__action">
                     <div class="weui-actionsheet__cell success-btn" @click="submit">确定</div>
-                    <div class="weui-actionsheet__cell error-btn" @click="closeActionSheet">取消</div>
+
+
                 </div>
             </div>
         </div>
@@ -236,26 +139,84 @@
         data() {
             return {
                 actionSheet: false,
+                goods: {},
+                selectNum: 1,
+                goToWhere: ''//跳转 now直接购买，join加入购物车
             }
         },
         methods: {
-            openActionSheet: function () {
+            openActionSheet: function (where) {
 
                 this.actionSheet = true;
+                this.goToWhere = where;
 //                iosActionsheet.className+=" weui-actionsheet_toggle";
             },
             closeActionSheet: function () {
                 this.actionSheet = false;
             },
-            submit: function () {
-                this.$router.push({path: '/wxPaySuccess'})
+            goToShopCart: function () {
+                this.$router.push({path: '/home/shopCart'})
             }
+            ,
+            goToHome: function () {
+                this.$router.push({path: '/home/index'})
+            }
+            ,
+            submit: function () {
+                if (this.goToWhere == 'now')
+                    this.$router.push({path: '/wxPaySuccess'})
+                else {
+                    var self = this;
+                    if(self.goods.overplusNum<1)
+                    {
+                        weui.topTips("该商品次数已满，请选择下一期参与夺宝！");
+                        return;
+                    }
+                    self.$http.post("ShopCart/join", {
+                        DBPeriodsID: self.goods.id,
+                        Num: self.selectNum,
+                        Price: self.goods.perPrice,
+                        GoodsID: self.goods.goodsID
+                    }).then(response => {
+                        if(response.body.status){
+                            weui.toast(response.body.message, 3000);
+                            this.closeActionSheet();
+                        }else {
+                            weui.topTips(response.body.message)
+                        }
+
+                    })
+
+                }
+
+            },
+            getGoodsDetail: function (id) {
+                var self = this;
+                self.$http.get("DBPeriods/" + id).then(response => {
+                    self.goods = response.body.data;
+                    self.goods.goodsLogo2 = self.goods.goodsLogo2.split(',')
+                })
+            },
+            setNum: function (num) {
+                if (this.goods.overplusNum>num)
+                    this.selectNum = num;
+                else
+                    this.selectNum = this.goods.overplusNum;
+            },
+            add: function () {
+                if (this.goods.overplusNum>this.selectNum)
+                    this.selectNum++;
+            },
+            sub: function () {
+                if (this.selectNum > 1)
+                    this.selectNum--;
+            },
         },
         created: function () {
-
+            var id = this.$route.query.id;
+            this.getGoodsDetail(id);
         },
         mounted: function () {
-
         },
         components: {
             sliderCom,
@@ -298,9 +259,9 @@
                 }
             }
             .information {
-                display:-webkit-box;
-                display:-webkit-flex;
-                display:flex;
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: flex;
                 .item {
                     flex: 1;
                     text-align: center;
@@ -417,17 +378,22 @@
             }
         }
         .bottom {
-            position: absolute;
+            position: fixed;
             bottom: 0px;
             height: 44px;
             width: 100%;
             text-align: center;
-            background-color: #e73f34;
-            color: white;
+            background-color: #fff;
+            color: rgba(0, 0, 0, .72);
             font-weight: bold;
             font-size: 16px;
             line-height: 40px;
             z-index: 1001;
+            .weui-flex__item {
+                color: #fff;
+                font-size: 16px;
+                font-weight: normal;
+            }
         }
 
     }
@@ -450,7 +416,7 @@
             margin-top: 10px;
             div {
                 span {
-                    padding: 8px 20px;
+                    padding: 6px 20px;
                     border: 1px solid rgba(0, 0, 0, 0.2);
                     -webkit-tap-highlight-color: rgba(0, 0, 0, 0.2);
                     &:first-child {

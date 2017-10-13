@@ -1,15 +1,17 @@
 <template>
     <div class="goodslist">
         <div class="category">
-            <div class="item" v-for="item in category" @click="setCurrent(item)" v-bind:class="{active:currentID==item.id}">{{item.name}}</div>
+            <div class="item" v-for="item in category" @click="setCurrent(item)" v-bind:class="{active:current==item}">
+                {{item.name}}
+            </div>
         </div>
         <div class="weui-cells" style="margin-top: 0px">
-            <div @click="calcPrise()" class="weui-cell" v-for="(item ,index) in goodsList" v-bind:for="index">
-                <div class="weui-cell__hd" >
-                    <img src="../../assets/logo.png" style="width:60px;margin-right:5px;display:block"/></div>
+            <div class="weui-cell" v-for="(item ,index) in goodsList" @click="goToDetail(item)">
+                <div class="weui-cell__hd">
+                    <img v-bind:src="item.goodsLogo" style="width:60px;margin-right:5px;display:block"/></div>
                 <div class="weui-cell__bd">
-                    <p>{{item.name}}</p>
-                    <p style="font-size: 13px; color: rgb(136, 136, 136);">{{item.describe}}</p>
+                    <p>{{'【第' + item.periodsCode + '期】' + item.goodsName}}</p>
+                    <p style="font-size: 13px; color: rgb(136, 136, 136);">{{item.goodsDescribe}}</p>
                 </div>
             </div>
         </div>
@@ -21,63 +23,79 @@
     export default {
         data() {
             return {
-                goodsList: [
-                    {name: "小米6", describe: "黑色 64G", num: 1, prise: 1999},
-                    {name: "小米6", describe: "黑色 64G", num: 1, prise: 1999},
-                    {name: "小米6", describe: "黑色 64G", num: 1, prise: 1999},
-                    {name: "小米6", describe: "黑色 64G", num: 1, prise: 1999},
-                    {name: "小米6", describe: "黑色 64G", num: 1, prise: 1999},
-                    {name: "小米6", describe: "黑色 64G", num: 1, prise: 1999},
-                ],
-                category:[
-                    {id:1,name:"苹果"},
-                    {id:2,name:"华为"},
-                    {id:3,name:"三星"},
-                    {id:4,name:"小米"},
-                    {id:5,name:"HTC"},
-                    {id:6,name:"VIVO"},
-                ],
-                currentID:1
+                goodsList: [],
+                category: [],
+                current: []
             }
         },
         methods: {
-            setCurrent:function (item) {
-                this.currentID=item.id;
+            setCurrent: function (item) {
+                this.current = item;
+                this.getGoodsListByCID(item.id);
+            },
+            getCategoryByID: function (cid) {
+                var self = this;
+                self.$http.get("Category/" + cid).then(response => {
+                    self.category = response.body.data;
+                    var current = self.$Enumerable.From(self.category).First(s => s.id == cid);
+                    self.setCurrent(current);
+                })
+            },
+            getGoodsListByCID: function (cid) {
+                var self = this;
+                self.$http.get("DBPeriods/GetDBPeriodsByCID/", {params: {cid: cid}}).then(response => {
+                    self.goodsList = response.body.data;
+                })
+            },
+            goToDetail: function (item) {
+                this.$router.push({path: "/goodsDetail", query: {id: item.id}});
             }
         },
         created: function () {
-            console.log("参数"+this.$route.query.cid)
+            var cid = this.$route.query.cid;
+            this.getCategoryByID(cid);
+            this.getGoodsListByCID(cid);
         },
-        computed:{
-
-        },
+        computed: {},
         mounted: function () {
 
-        }
+        },
     }
 </script>
 
 <style lang="scss">
-    .goodslist{
-        .category{
+    .goodslist {
+        .category {
             width: 100%;
             display: flex;
-            .item{
+            border-bottom: 1px solid #e5e5e5;
+            .item {
                 color: #8f8f8f;
-                padding:10px 15px 5px 15px;
+                padding: 10px 15px 5px 15px;
                 flex-direction: row;
                 text-align: center;
                 font-size: 16px;
                 font-weight: 700;
-                -webkit-tap-highlight-color: rgba(0,0,0,0);
+                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
             }
-            .active{
+            .active {
                 color: #f9650b;
-                background: linear-gradient(#f9650b , #f9650b) no-repeat !important;
-                background-size:50% 2px!important;
-                background-position: bottom center!important;
+                background: linear-gradient(#f9650b, #f9650b) no-repeat !important;
+                background-size: 50% 2px !important;
+                background-position: bottom center !important;
             }
 
+        }
+        .weui-cells{
+            .weui-cell__bd{
+                p{
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                }
+            }
         }
     }
 </style>

@@ -152,7 +152,6 @@
                     },
                 }).then(response => {
                     // get body data
-                    debugger
                     var data = response.body;
                     if (data.status) {
                         var token = 'bearer ' + data.data.token;
@@ -166,7 +165,6 @@
                     }
                 }, response => {
                     // error callback
-                    debugger
 
                     weui.topTips("未知错误", 3000);
                 });

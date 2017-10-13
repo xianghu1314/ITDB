@@ -31,7 +31,7 @@
             </a>
         </div>
         <div class="weui-cells" style="margin-top: 5px">
-            <a href="javascript:;" class="weui-cell weui-cell_access">
+            <a href="javascript:;" @click="goTo('/purchaseHistory')" class="weui-cell weui-cell_access">
                 <div class="weui-cell__hd">
                     <i class="iconfont icon-duobaojilu" style="background-color: #8c72a4"></i>
                 </div>
@@ -136,6 +136,7 @@
 
         .weui-cells {
             margin-top: 0px;
+            background-color: #fff;
         }
         .iconfont {
             display: inline-block;
