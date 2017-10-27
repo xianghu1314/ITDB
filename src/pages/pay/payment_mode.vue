@@ -109,8 +109,11 @@
                     PayMode: self.payMode,
                     AddressID: self.address.id
                 }).then(r => {
-                    if (r.body.status)
+                    if (r.body.status){
+                        sessionStorage.removeItem("shopcart");
                         weui.toast(r.body.message);
+                        self.$router.push("/wxPaySuccess")
+                    }
                     else
                         weui.topTips(r.body.message);
                 })

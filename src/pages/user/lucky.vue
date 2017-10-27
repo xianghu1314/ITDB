@@ -12,20 +12,20 @@
                         <div class="weui-cell__hd">
                             <img src="src/assets/logo.png" style="width:60px;margin-right:5px;display:block"/></div>
                         <div class="weui-cell__bd">
-                            <p>{{item.name}}</p>
-                            <p style="font-size: 13px; color: rgb(136, 136, 136);">{{item.describe}}</p>
-                            <p style="font-size: 13px; color: rgb(136, 136, 136);">总需：10000</p>
-                            <p style="font-size: 13px; color: rgb(136, 136, 136);">商品期数:567654</p>
+                            <p>{{item.goodsName}}</p>
+                            <p style="font-size: 13px; color: rgb(136, 136, 136);">{{item.goodsDetail}}</p>
+                            <p style="font-size: 13px; color: rgb(136, 136, 136);">总需：{{item.needNum}}</p>
+                            <p style="font-size: 13px; color: rgb(136, 136, 136);">商品期数:{{item.periodsCode}}</p>
                         </div>
                         <div class="weui-cell__ft">
                             <img src="img/xingyun.png"/></div>
                     </div>
                     <div class="list-describe">
                         <div class="list-describe-content">
-                            <p>获奖者：陌冰曦</p>
-                            <p>本次参与：20人次</p>
-                            <p>幸运号：1314520</p>
-                            <p>开奖时间：2017-07-07 12:12:12</p>
+                            <p>获奖者：{{item.userName}}</p>
+                            <p>本次参与：{{item.dbNum}}人次</p>
+                            <p>幸运号：{{item.luckyCode}}</p>
+                            <p>开奖时间：{{item.openTime}}</p>
                             <i class="iconfont icon-fenxiang"></i>
                         </div>
                     </div>
@@ -39,19 +39,19 @@
     export default {
         data() {
             return {
-                goodsList: [
-                    {name: "小米6", describe: "黑色 64G", num: 1, prise: 1999},
-                    {name: "小米6", describe: "黑色 64G", num: 1, prise: 1999},
-                    {name: "小米6", describe: "黑色 64G", num: 1, prise: 1999},
-                    {name: "小米6", describe: "黑色 64G", num: 1, prise: 1999},
-                    {name: "小米6", describe: "黑色 64G", num: 1, prise: 1999},
-                    {name: "小米6", describe: "黑色 64G", num: 1, prise: 1999},
-                ],
+                goodsList: [],
             }
         },
-        methods: {},
+        methods: {
+            getNewList:function () {
+                var self=this;
+                self.$http.get("DBPeriods/GetNewList").then(r=>{
+                    self.goodsList=r.body.data;
+                })
+            }
+        },
         created: function () {
-
+            this.getNewList();
         },
         mounted: function () {
 
