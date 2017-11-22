@@ -75,6 +75,8 @@
 <style lang="scss">
     .newOpen{
         min-height: 100%;
+        background-color: #f5f5f5;
+
         .NoData{
             text-align: center;
             padding: 20px;
@@ -86,7 +88,6 @@
             color:blue;
         }
         .weui-masonry{
-            background-color: #f5f5f5;
 
             min-height: 100%;
             column-count: 2; column-gap: 0;

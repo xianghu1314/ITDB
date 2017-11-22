@@ -6,7 +6,7 @@
                 <h3 class="icon-box__title">支付成功</h3>
                 <div class="goBtn">
                     <span @click="goToGoodsDetail()">继续购买</span>
-                    <span>返回首页</span>
+                    <span @click="goToHome()">返回首页</span>
                 </div>
             </div>
         </div>
@@ -47,7 +47,10 @@
             showAll: function (item) {
                 item.showAll = !item.showAll;
             },
-            goToGoodsDetail: function (id) {
+            goToGoodsDetail: function () {
+                this.$router.go(-1);
+            },
+            goToHome:function () {
                 this.$router.push("/home/index");
             },
             GetCurrentPurchase: function (oid) {
