@@ -89,10 +89,13 @@
         name: 'home',
         data () {
             return {
-                items: []
+                items: [],
+                ConfigCategories:[]
             }
         },
-
+        create:function () {
+            this.getCategories();
+        },
         methods: {
             refresh: function (done) {
                 var self = this
@@ -132,7 +135,15 @@
                     self.bottom = self.bottom + 10;
                     done();
                 }, 1500)
-            }
+            },
+
+            getCategories:function () {
+                 var self=this;
+                 self.$http.get("Config/getCategories").then(r=>{
+                     debugger
+                     self.ConfigCategories=r.body.data;
+                 });
+             }
             },
         mounted:function () {
             weui.tab('#categories_tab',{
