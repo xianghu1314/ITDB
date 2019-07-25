@@ -3,7 +3,7 @@
         <search-com></search-com>
         <div class="weui-tab" id="categories_tab">
             <div class="weui-navbar">
-                <div v-for="(item,index) in ConfigCategories" @click="changeCategory(index)"
+                <div v-for="(item,index) in ConfigCategories"  @click="changeCategory(index)"
                      :class="{'weui-bar__item_on':CurrentIndex==index}" class="weui-navbar__item">
                     {{item.name}}{{CurrentIndex}}
                 </div>
@@ -11,9 +11,8 @@
             <div class="weui-tab__panel">
                 <div class="weui-tab__content page_feedback">
                     <scroller :on-refresh="refresh"
-                              :on-infinite="infinite"
-                              style="padding-top: 35px;">
-                        <slider-com ref="b1" :banners="Pages[CurrentIndex].sliders"></slider-com>
+                              :on-infinite="infinite">
+                        <slider-com :images="Pages[CurrentIndex].sliders"></slider-com>
                         <navigation-com></navigation-com>
                         <scroll-caption-com></scroll-caption-com>
                         <multi-list-com v-bind:ArrayData="Pages[CurrentIndex].GoodsList"></multi-list-com>
@@ -21,33 +20,32 @@
                 </div>
                 <div class="weui-tab__content" style="display:none">
                     <scroller :on-refresh="refresh"
-                              :on-infinite="infinite"
-                              style="padding-top: 35px;">
+                              :on-infinite="infinite">
                         <multi-list-com v-bind:ArrayData="Pages[CurrentIndex].GoodsList"></multi-list-com>
                     </scroller>
                 </div>
                 <div class="weui-tab__content" style="display:none">
-                    <scroller :on-refresh="refresh" :on-infinite="infinite" style="padding-top: 35px;">
+                    <scroller :on-refresh="refresh" :on-infinite="infinite" >
                         <multi-list-com v-bind:ArrayData="Pages[CurrentIndex].GoodsList"></multi-list-com>
                     </scroller>
                 </div>
                 <div class="weui-tab__content" style="display:none">
-                    <scroller :on-refresh="refresh" :on-infinite="infinite" style="padding-top: 35px;">
+                    <scroller :on-refresh="refresh" :on-infinite="infinite" >
                         <multi-list-com v-bind:ArrayData="Pages[CurrentIndex].GoodsList"></multi-list-com>
                     </scroller>
                 </div>
                 <div class="weui-tab__content" style="display:none">
-                    <scroller :on-refresh="refresh" :on-infinite="infinite" style="padding-top: 35px;">
+                    <scroller :on-refresh="refresh" :on-infinite="infinite" >
                         <multi-list-com v-bind:ArrayData="Pages[CurrentIndex].GoodsList"></multi-list-com>
                     </scroller>
                 </div>
                 <div class="weui-tab__content" style="display:none">
-                    <scroller :on-refresh="refresh" :on-infinite="infinite" style="padding-top: 35px;">
+                    <scroller :on-refresh="refresh" :on-infinite="infinite" >
                         <multi-list-com v-bind:ArrayData="Pages[CurrentIndex].GoodsList"></multi-list-com>
                     </scroller>
                 </div>
                 <div class="weui-tab__content" style="display:none">
-                    <scroller :on-refresh="refresh" :on-infinite="infinite" style="padding-top: 35px;">
+                    <scroller :on-refresh="refresh" :on-infinite="infinite" >
                         <multi-list-com v-bind:ArrayData="Pages[CurrentIndex].GoodsList"></multi-list-com>
                     </scroller>
                 </div>
@@ -143,6 +141,7 @@
             });
             for (var i = 1; i <= 20; i++) {
                 self.Pages[self.CurrentIndex].GoodsList.push({
+                    id:1,
                     logo: "https://i3.mifile.cn/a4/725a37e3-78b7-4298-8098-c40097bf179d",
                     title: "小米笔记本",
                     describes: "低调奢华",

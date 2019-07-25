@@ -186,8 +186,8 @@
                     {type:6,num:5},//可滑动
                     {type:7,num:3},//左边一个，右边两个
                     {type:8,num:3},//左边两个，右边一个
-                    {type:9,num:2},//左边大，右边小
-                    {type:10,num:2},//左边小，右边大
+                    // {type:9,num:2},//左边大，右边小
+                    // {type:10,num:2},//左边小，右边大
                 ],
                 CurrentClassType:[],
                 FormatList:[]
@@ -352,7 +352,7 @@
             width: 100%;
             overflow-x: scroll;
             .weui-flex{
-                width: 200%;
+                /*width: 200%;*/
                 .weui-flex__item{
                     width: 35%;
                     display: flex;

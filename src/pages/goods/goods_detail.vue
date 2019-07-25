@@ -1,7 +1,7 @@
 <template>
     <div class="goodsDetail">
         <div style="padding-bottom: 40px;height: 100%;overflow: auto;box-sizing: border-box">
-            <slider-com :images="goods.goodsLogo2"></slider-com>
+            <slider-com :images="goods.goodsLogo2" ></slider-com>
             <div class="goods">
                 <p class="title">{{goods.goodsName}}</p>
                 <p class="describe">{{goods.goodsDescribe}}</p>
@@ -193,8 +193,8 @@
             getGoodsDetail: function (id) {
                 var self = this;
                 self.$http.get("DBPeriods/" + id).then(response => {
+                    response.body.data.goodsLogo2 = response.body.data.goodsLogo2.split(',')
                     self.goods = response.body.data;
-                    self.goods.goodsLogo2 = self.goods.goodsLogo2.split(',')
                 })
             },
             setNum: function (num) {

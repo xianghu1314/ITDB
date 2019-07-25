@@ -1,6 +1,7 @@
-require('swiper/dist/css/swiper.css')
 import Vue from 'vue'
-import VueAwesomeSwiper from 'vue-awesome-swiper';
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'swiper/dist/css/swiper.css'
+// import Swiper from 'swiper';
 import VueScroller from 'vue-scroller'
 import VueResource from 'vue-resource'
 import router from './routes'
