@@ -2,53 +2,18 @@
     <div id="home">
         <search-com></search-com>
         <div class="weui-tab" id="categories_tab">
-            <div class="weui-navbar">
-                <div v-for="(item,index) in ConfigCategories"  @click="changeCategory(index)"
-                     :class="{'weui-bar__item_on':CurrentIndex==index}" class="weui-navbar__item">
-                    {{item.name}}{{CurrentIndex}}
+            <div class="weui-navbar" id="categories_navbar">
+                <div v-for="(item,index) in ConfigCategories" :class="{'weui-bar__item_on':CurrentIndex==index}" class="weui-navbar__item">
+                    {{item.name}}
                 </div>
             </div>
-            <div class="weui-tab__panel">
-                <div class="weui-tab__content page_feedback">
-                    <scroller :on-refresh="refresh"
-                              :on-infinite="infinite">
-                        <slider-com :images="Pages[CurrentIndex].sliders"></slider-com>
-                        <navigation-com></navigation-com>
-                        <scroll-caption-com></scroll-caption-com>
-                        <multi-list-com v-bind:ArrayData="Pages[CurrentIndex].GoodsList"></multi-list-com>
-                    </scroller>
-                </div>
-                <div class="weui-tab__content" style="display:none">
-                    <scroller :on-refresh="refresh"
-                              :on-infinite="infinite">
-                        <multi-list-com v-bind:ArrayData="Pages[CurrentIndex].GoodsList"></multi-list-com>
-                    </scroller>
-                </div>
-                <div class="weui-tab__content" style="display:none">
-                    <scroller :on-refresh="refresh" :on-infinite="infinite" >
-                        <multi-list-com v-bind:ArrayData="Pages[CurrentIndex].GoodsList"></multi-list-com>
-                    </scroller>
-                </div>
-                <div class="weui-tab__content" style="display:none">
-                    <scroller :on-refresh="refresh" :on-infinite="infinite" >
-                        <multi-list-com v-bind:ArrayData="Pages[CurrentIndex].GoodsList"></multi-list-com>
-                    </scroller>
-                </div>
-                <div class="weui-tab__content" style="display:none">
-                    <scroller :on-refresh="refresh" :on-infinite="infinite" >
-                        <multi-list-com v-bind:ArrayData="Pages[CurrentIndex].GoodsList"></multi-list-com>
-                    </scroller>
-                </div>
-                <div class="weui-tab__content" style="display:none">
-                    <scroller :on-refresh="refresh" :on-infinite="infinite" >
-                        <multi-list-com v-bind:ArrayData="Pages[CurrentIndex].GoodsList"></multi-list-com>
-                    </scroller>
-                </div>
-                <div class="weui-tab__content" style="display:none">
-                    <scroller :on-refresh="refresh" :on-infinite="infinite" >
-                        <multi-list-com v-bind:ArrayData="Pages[CurrentIndex].GoodsList"></multi-list-com>
-                    </scroller>
-                </div>
+            <div>
+                <scroller :on-refresh="refresh" :on-infinite="infinite" :noDataText="'没有更多了'" ref="my_scroller">
+                    <slider-com :images="sliders"></slider-com>
+                    <navigation-com></navigation-com>
+                    <scroll-caption-com></scroll-caption-com>
+                    <multi-list-com v-bind:ArrayData="GoodsList" ref="my_multi"></multi-list-com>
+                </scroller>
             </div>
         </div>
     </div>
@@ -65,92 +30,109 @@
         name: 'home',
         data() {
             return {
-                ConfigCategories: [],
+                ConfigCategories: [{
+                    data: "0",
+                    id: 0,
+                    ifShow: true,
+                    name: "全部",
+                    sort: 0,
+                    url: "",
+                }],
                 CurrentIndex: 0,
-                Pages: [
-                    {
-                        GoodsList: [],
-                        sliders: ["https://i8.mifile.cn/v1/a1/950d488e-8f41-2731-9da4-7e8aad9cb99b.webp?bg=BA4449", "https://i8.mifile.cn/v1/a1/f36d5d65-2f32-3945-33af-d5fff31e73f0.webp?bg=385293"]
-                    }
-                ],
-
+                pageIndex: 0,//分开
+                pageSize: 20,
+                sliders: [],
+                GoodsList: [],
             }
         },
         created: function () {
+
+
             this.getCategories();
+            this.getSliders();
         },
         methods: {
+            //下拉
             refresh: function (done) {
                 var self = this
-                setTimeout(function () {
-                    var start = self.top - 1
-                    for (var i = start; i > start - 10; i--) {
-                        self.Pages[self.CurrentIndex].GoodsList.splice(0, 0, {
-                            logo: "https://i3.mifile.cn/a4/725a37e3-78b7-4298-8098-c40097bf179d",
-                            title: "小米笔记本 加强版 新",
-                            describes: "低调奢华",
-                            Prise: 4999.00,
-                            LotteryPrise: 10.00
-                        });
-                    }
-                    self.top = self.top - 10;
-                    done();
-                }, 1500)
+                self.pageIndex = 0;
+                self.pageSize = 20;
+                self.getGoods(function () {
+                    self.$refs.my_scroller.finishPullToRefresh()
+                });
             },
             changeCategory: function (index) {
-                this.CurrentIndex = index;
+                var self = this;
+                self.CurrentIndex = index;
+                self.pageIndex = 0;
+                self.pageSize = 20;
+                self.getGoods(function () {
+                    self.$refs.my_scroller.finishPullToRefresh()
+                });
             },
+            //上拉
             infinite: function (done) {
-                if (this.bottom >= 100) {
-                    setTimeout(() => {
-                        done(true)
-                    }, 1500)
-                    return;
-                }
                 var self = this
-                setTimeout(function () {
-                    var start = self.bottom + 1;
-                    for (var i = start; i < start + 10; i++) {
-                        self.Pages[self.CurrentIndex].GoodsList.push({
-                            logo: "https://i3.mifile.cn/a4/725a37e3-78b7-4298-8098-c40097bf179d",
-                            title: "小米笔记本",
-                            describes: "低调奢华",
-                            Prise: 4999.00,
-                            LotteryPrise: 10.00
-                        });
-                    }
-                    self.bottom = self.bottom + 10;
-                    done();
-                }, 1500)
+                self.getGoods(function () {
+                    self.$refs.my_scroller.finishInfinite(true);
+                });
             },
             getCategories: function () {
                 var self = this;
                 self.$http.get("Config/getCategories").then(r => {
-                    self.ConfigCategories = r.body.data;
+                    self.ConfigCategories = self.ConfigCategories.concat(r.body.data);
+                    setTimeout(function () {
+                        weui.tab('#categories_navbar',{
+                            defaultIndex: 0,
+                            onChange: function(index){
+                                self.CurrentIndex = index;
+                                self.pageIndex = 0;
+                                self.pageSize = 20;
+                                self.getGoods(function () {
+                                    self.$refs.my_scroller.finishPullToRefresh()
+                                });
+                            }
+                        });
+                    },100)
+                });
+            },
+            getSliders: function () {
+                var self = this;
+                self.$http.get("Config/getSliders").then(r => {
+                    self.sliders = r.body.data.map(item => item.imgUrl);
+                });
+            },
+            getGoods: function (callback) {
+                var self = this;
+                self.$http.get("DBPeriods/GetDBPeriods", {
+                    params: {
+                        CategoryId: (self.ConfigCategories[self.CurrentIndex] || {}).id,
+                        PageIndex: self.pageIndex,
+                        PageSize: self.pageSize
+                    }
+                }).then(r => {
+                    if (callback && typeof callback === 'function') callback();
+
+                    if (!r) {
+                        weui.toast('获取失败', 3000);
+                        return
+                    }
+                    if (self.pageIndex === 0) {
+                        self.$refs.my_multi.clean();
+                        self.GoodsList = r.body.data;
+
+                    } else {
+                        if (r.body.data.length === 0) {
+                            weui.toast('没有更多了', 3000);
+                        } else {
+                            self.GoodsList = self.GoodsList.concat(r.body.data);
+                        }
+                    }
                 });
             }
         },
         mounted: function () {
-            var self = this;
-            weui.tab('#categories_tab', {
-                defaultIndex: 0,
-                onChange: function (index) {
-                    //alert(index);
-                    //self.CurrentIndex=index;
-                }
-            });
-            for (var i = 1; i <= 20; i++) {
-                self.Pages[self.CurrentIndex].GoodsList.push({
-                    id:1,
-                    logo: "https://i3.mifile.cn/a4/725a37e3-78b7-4298-8098-c40097bf179d",
-                    title: "小米笔记本",
-                    describes: "低调奢华",
-                    Prise: 4999.00,
-                    LotteryPrise: 10.00
-                });
-            }
-            this.top = 1;
-            this.bottom = 20;
+
         },
         components: {
             searchCom, sliderCom, navigationCom, scrollCaptionCom, multiListCom
@@ -165,7 +147,9 @@
     #home div {
         box-sizing: border-box;
     }
-
+    #home .pull-to-refresh-layer{
+        height: 92px;
+    }
     #categories_tab .weui-navbar {
         background: white;
     }
@@ -187,7 +171,4 @@
         background-position: bottom center !important;
     }
 
-    .weui-navbar + .weui-tab__panel {
-        padding-top: 35px;
-    }
 </style>

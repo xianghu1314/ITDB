@@ -37,7 +37,7 @@
                 </div>
             </div>
             <div class="weui-btn-area">
-                <a v-if="!address.userPhone" class="weui-btn weui-btn_primary" href="javascript:" @click="addAddress">确定</a>
+                <a v-if="ifAdd" class="weui-btn weui-btn_primary" href="javascript:" @click="addAddress">确定</a>
                 <a class="weui-btn weui-btn_primary" href="javascript:" @click="editAddress" v-else>提交</a>
             </div>
         </div>
@@ -55,7 +55,8 @@
                     userName: '',
                     address: '',
                     detailAddress: '',
-                }
+                },
+                ifAdd:true
             }
         },
         methods: {
@@ -123,7 +124,8 @@
         },
         created: function () {
             //this.getLocation();
-            this.address=this.$route.params
+            if (this.$route.params.userPhone) this.ifAdd=false;
+            this.address=this.$route.params;
 
         }
         ,

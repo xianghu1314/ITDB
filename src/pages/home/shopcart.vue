@@ -118,7 +118,6 @@
                     weui.topTips("请选择需要购买的商品", 2000);
                 }
                 self.$http.post("ShopCart/delete", date).then(response => {
-                    debugger
                     if (response.body.status == false)
                         weui.topTips("删除失败，请重试", 2000);
                     else
@@ -181,11 +180,12 @@
 
 <style lang="scss">
     .shopcart-page {
-        position: relative;
         line-height: 44px;
-        box-sizing: border-box;
-        padding: 0px 0px 54px 0px;
+        display: flex;
+        flex-direction: column;
         height: 100%;
+        padding-bottom: 54px;
+        box-sizing: border-box;
         .hidden {
             display: none;
         }
@@ -193,7 +193,7 @@
             margin-top: 0px;
         }
         .content {
-            height: 100%;
+            flex: 1;
             .select-hd {
                 display: -webkit-box;
                 display: -webkit-flex;
@@ -239,8 +239,6 @@
         .footer {
             display: flex;
             height: 44px;
-            position: absolute;
-            bottom: 0px;
             width: 100%;
             box-sizing: border-box;
             div {

@@ -1,7 +1,7 @@
 <!-- The ref attr used to find the swiper instance -->
 <template>
     <!--</swiper>-->
-    <swiper :options="swiperOption" ref="mySwiper" @someSwiperEvent="callback">
+    <swiper :options="swiperOption" ref="mySwiper" >
         <!-- slides -->
         <swiper-slide v-for="(image,index) in images" :key="index">
             <img :src="image">

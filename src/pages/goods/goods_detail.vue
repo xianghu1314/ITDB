@@ -172,6 +172,7 @@
                         weui.topTips("该商品次数已满，请选择下一期参与夺宝！");
                         return;
                     }
+                    debugger
                     self.$http.post("ShopCart/join", {
                         DBPeriodsID: self.goods.id,
                         Num: self.selectNum,
