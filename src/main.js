@@ -23,7 +23,7 @@ Vue.use(VueLinq);
 Vue.http.headers.common['Authorization'] = localStorage.getItem("token");
 Vue.http.interceptors.push((request, next) => {
     // modify request
-    request.url = "http://localhost:5000/api/" + request.url;
+    request.url = "http://192.168.1.120:5000/api/" + request.url;
     // continue to next interceptor
     next((response) => {
         //在响应之后传给then之前对response进行修改和逻辑判断。

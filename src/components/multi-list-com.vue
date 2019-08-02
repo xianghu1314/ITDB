@@ -3,12 +3,12 @@
         <div v-for="item in formatList">
             <div v-if="item.type==1" class="weui-flex list-type1">
                 <div class="weui-flex__item" v-for="it in item.data" @click="gotoDetail(it)">
-                    <img :src="it.goodsLogo">
+                    <img :src="it.goodsLogo" onerror="javascript:this.src='../../img/pandadb.jpg'">
                 </div>
             </div>
             <div v-else-if="item.type==2" class="weui-flex list-type2">
                 <div class="weui-flex__item" v-for="it in item.data" @click="gotoDetail(it)">
-                    <img :src="it.goodsLogo">
+                    <img :src="it.goodsLogo" onerror="javascript:this.src='../../img/pandadb.jpg'">
                     <div class="weui-flex__item_footer">
                         <h5>{{it.title}}</h5>
                         <p>{{it.goodsDescribe}}</p>
@@ -21,7 +21,7 @@
             </div>
             <div v-else-if="item.type==3" class="weui-flex list-type3">
                 <div class="weui-flex__item" v-for="it in item.data" @click="gotoDetail(it)">
-                    <img :src="it.goodsLogo">
+                    <img :src="it.goodsLogo" onerror="javascript:this.src='../../img/pandadb.jpg'">
                     <div class="weui-flex__item_footer">
                         <h5>{{it.title}}</h5>
                         <p>{{it.goodsDescribe}}</p>
@@ -34,7 +34,7 @@
             </div>
             <div v-else-if="item.type==4" class="weui-flex list-type4">
                 <div class="weui-flex__item" @click="gotoDetail(item.data[0])">
-                    <img :src="getArray(item.data,0).goodsLogo">
+                    <img :src="getArray(item.data,0).goodsLogo" onerror="javascript:this.src='../../img/pandadb.jpg'">
                 </div>
                 <div class="weui-flex__item" @click="gotoDetail(item.data[0])">
                     <div class="weui-flex__item_footer">
@@ -59,19 +59,12 @@
                     </div>
                 </div>
                 <div class="weui-flex__item" @click="gotoDetail(item.data[0])">
-                    <img :src="getArray(item.data,0).goodsLogo">
+                    <img :src="getArray(item.data,0).goodsLogo" onerror="javascript:this.src='../../img/pandadb.jpg'">
                 </div>
             </div>
-            <div v-else-if="item.type==6" class="list-type6">
-                <div class="weui-flex">
-                    <div class="weui-flex__item" v-for="it in item.data" @click="gotoDetail(it)">
-                        <img :src="it.goodsLogo">
-                    </div>
-                </div>
-            </div>
-            <div v-else-if="item.type==7" class="weui-flex list-type7">
+            <div v-else-if="item.type==6" class="weui-flex list-type7">
                 <div class="weui-flex__item" @click="gotoDetail(getArray(item.data,0))">
-                    <img :src="getArray(item.data,0).goodsLogo">
+                    <img :src="getArray(item.data,0).goodsLogo" onerror="javascript:this.src='../../img/pandadb.jpg'">
                     <div class="weui-flex__item_footer">
                         <h5>{{getArray(item.data,0).title}}</h5>
                         <p>{{getArray(item.data,0).goodsDescribe}}</p>
@@ -82,25 +75,17 @@
                     </div>
                 </div>
                 <div class="weui-flex__item list-two">
-                    <div @click="gotoDetail(getArray(item.data,1))">
-                        <img :src="getArray(item.data,1).goodsLogo">
-                    </div>
-                    <div @click="gotoDetail(getArray(item.data,2))">
-                        <img :src="getArray(item.data,2).goodsLogo">
-                    </div>
+                    <img :src="getArray(item.data,1).goodsLogo" @click="gotoDetail(getArray(item.data,1))" onerror="javascript:this.src='../../img/pandadb.jpg'">
+                    <img :src="getArray(item.data,2).goodsLogo" @click="gotoDetail(getArray(item.data,2))" onerror="javascript:this.src='../../img/pandadb.jpg'">
                 </div>
             </div>
-            <div v-else-if="item.type==8" class="weui-flex list-type8">
+            <div v-else-if="item.type==7" class="weui-flex list-type8">
                 <div class="weui-flex__item list-two">
-                    <div @click="gotoDetail(getArray(item.data,1))">
-                        <img :src="getArray(item.data,1).goodsLogo">
-                    </div>
-                    <div @click="gotoDetail(getArray(item.data,2))">
-                        <img :src="getArray(item.data,2).goodsLogo">
-                    </div>
+                    <img @click="gotoDetail(getArray(item.data,1))" :src="getArray(item.data,1).goodsLogo" onerror="javascript:this.src='../../img/pandadb.jpg'">
+                    <img @click="gotoDetail(getArray(item.data,2))" :src="getArray(item.data,2).goodsLogo" onerror="javascript:this.src='../../img/pandadb.jpg'">
                 </div>
                 <div class="weui-flex__item" @click="gotoDetail(getArray(item.data,0))">
-                    <img :src="getArray(item.data,0).goodsLogo">
+                    <img :src="getArray(item.data,0).goodsLogo" onerror="javascript:this.src='../../img/pandadb.jpg'">
                     <div class="weui-flex__item_footer">
                         <h5>{{getArray(item.data,0).title}}</h5>
                         <p>{{getArray(item.data,0).goodsDescribe}}</p>
@@ -111,54 +96,6 @@
                     </div>
                 </div>
 
-            </div>
-            <div v-else-if="item.type==9" class="weui-flex list-type9">
-                <div class="weui-flex__item item-big" @click="gotoDetail(getArray(item.data,0))">
-                    <img :src="getArray(item.data,0).goodsLogo">
-                    <div class="weui-flex__item_footer">
-                        <h5>{{getArray(item.data,0).title}}</h5>
-                        <p>{{getArray(item.data,0).goodsDescribe}}</p>
-                        <div class="item_footer_bottom">
-                            <span>¥{{getArray(item.data,0).goodsPrice}}</span>
-                            <span>夺宝{{getArray(item.data,0).perPrice}}</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="item-sm" @click="gotoDetail(getArray(item.data,1))">
-                    <img :src="getArray(item.data,1).goodsLogo">
-                    <div class="weui-flex__item_footer">
-                        <h5>{{getArray(item.data,1).title}}</h5>
-                        <p>{{getArray(item.data,1).goodsDescribe}}</p>
-                        <div class="item_footer_bottom">
-                            <span>¥{{getArray(item.data,1).goodsPrice}}</span>
-                            <span>夺宝{{getArray(item.data,1).perPrice}}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div v-else-if="item.type==10" class="weui-flex list-type10">
-                <div class="item-sm" @click="gotoDetail(getArray(item.data,1))">
-                    <img :src="getArray(item.data,1).goodsLogo">
-                    <div class="weui-flex__item_footer">
-                        <h5>{{getArray(item.data,1).title}}</h5>
-                        <p>{{getArray(item.data,1).goodsDescribe}}</p>
-                        <div class="item_footer_bottom">
-                            <span>¥{{getArray(item.data,1).goodsPrice}}</span>
-                            <span>夺宝{{getArray(item.data,1).perPrice}}</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="weui-flex__item item-big" @click="gotoDetail(getArray(item.data,0))">
-                    <img :src="getArray(item.data,0).goodsLogo">
-                    <div class="weui-flex__item_footer">
-                        <h5>{{getArray(item.data,0).title}}</h5>
-                        <p>{{getArray(item.data,0).goodsDescribe}}</p>
-                        <div class="item_footer_bottom">
-                            <span>¥{{getArray(item.data,0).goodsPrice}}</span>
-                            <span>夺宝{{getArray(item.data,0).perPrice}}</span>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -182,11 +119,8 @@
                     {type: 3, num: 3},//平均
                     {type: 4, num: 1},//左边图片右边说明
                     {type: 5, num: 1},//右边图片左边说明
-                    {type: 6, num: 5},//可滑动
-                    {type: 7, num: 3},//左边一个，右边两个
-                    {type: 8, num: 3},//左边两个，右边一个
-                    // {type:9,num:2},//左边大，右边小
-                    // {type:10,num:2},//左边小，右边大
+                    {type: 6, num: 3},//左边一个，右边两个
+                    {type: 7, num: 3},//左边两个，右边一个
                 ],
                 FormatList: []
             }
@@ -203,9 +137,14 @@
             gotoDetail: function (item) {
                 this.$router.push({path: '/goodsDetail', query: {id: item.id}});
             },
-            clean:function () {
-                this.FormatList=[];
-            }
+            clean: function () {
+                this.FormatList = [];
+            },
+            // nofind: function () {
+            //     var img = event.srcElement;
+            //     img.src = "http://mat1.gtimg.com/cd/2017/home/nlogo0518.png"; //替换的图片
+            //     img.οnerrοr = null; //控制不要一直触发错误
+            // },
 
         },
         created: function () {
@@ -214,13 +153,13 @@
         computed: {
             formatList: function () {
                 var self = this;
-                if (self.ArrayData.length===0){
-                    self.FormatList=[];
+                if (self.ArrayData.length === 0) {
+                    self.FormatList = [];
                     return;
                 }
                 //生成FormatList的数量
                 var oldNum = self.FormatList.map(item => item.data.length)
-                oldNum=oldNum.length === 0 ? 0 : oldNum.reduce(function (a, b) {
+                oldNum = oldNum.length === 0 ? 0 : oldNum.reduce(function (a, b) {
                     return a + b;
                 });
                 //新增的数量
@@ -256,23 +195,29 @@
     $highlight: #f9650b;
     $mygay: #949494;
     #multi-list-com {
+        background-color: rgb(230, 230, 250);
         .weui-flex {
-            background-color: #f5f5f5 !important;
+            margin-top: 5px;
+        }
+        .list-two {
+            display: flex;
+            flex-direction: column;
         }
         .weui-flex__item {
             overflow: hidden;
             margin-right: 5px;
-            margin-top: 5px;
             background-color: white;
             &:last-child {
                 margin-right: 0px;
             }
+            img {
+                width: 100% !important;
+                margin: 0;
+            }
         }
         .list-type1 {
             .weui-flex__item {
-                img {
-                    width: 100%;
-                }
+                display: flex;
             }
         }
         .list-type2 {
@@ -349,22 +294,6 @@
         .list-type5 {
             @extend .list-type4
         }
-        /*滚动图*/
-        .list-type6 {
-            width: 100%;
-            overflow-x: scroll;
-            .weui-flex {
-                width: 200%;
-                .weui-flex__item {
-                    align-items: center;
-                    img {
-                        width: 100%;
-                    }
-                }
-            }
-
-        }
-
         .list-type7 {
             img {
                 width: 100%;
@@ -396,44 +325,6 @@
         }
         .list-type8 {
             @extend .list-type7
-        }
-        .list-type9 {
-            text-align: center;
-            .item-sm {
-                background-color: white;
-                margin-top: 5px;
-                width: calc(100vw * 0.382);
-                overflow: hidden;
-                img {
-                    height: calc(100vw * 0.382);
-                }
-            }
-            .item-big {
-                overflow: hidden;
-                img {
-                    height: calc(100vw * 0.382);;
-                }
-            }
-            .weui-flex__item_footer {
-                padding: 5px 10px;
-                h5 {
-                    font-weight: 400;
-                    color: black;
-                    font-size: 1em;
-                }
-                p {
-                    color: $mygay;
-                    font-size: .8em;
-                }
-
-                .item_footer_bottom {
-                    color: $highlight;
-                    font-size: .8em;
-                }
-            }
-        }
-        .list-type10 {
-            @extend .list-type9;
         }
     }
 </style>

@@ -1,66 +1,61 @@
 <template>
-<div class="newOpen">
-    <div class="weui-masonry" v-if="newList.length>0">
-        <div class="weui-masonry-item" v-for="item in newList">
-            <img :src="item.goodsLogo">
-            <p>{{item.goodsName}}</p>
-            <div class="describe" v-if="item.status!=1">
-                <dl>
-                    <dt>期号:</dt>
-                    <dd>{{item.periodsCode}}</dd>
-
-                    <dt>获得者:</dt>
-                    <dd class="blue">{{item.userName}}</dd>
-
-                    <dt>参与人次:</dt>
-                    <dd>0</dd>
-
-                    <dt>幸运号:</dt>
-                    <dd class="yellow">{{item.luckyCode}}</dd>
-
-                    <dt>开奖时间:</dt>
-                    <dd>{{item.openTime}}</dd>
-
-                </dl>
-            </div>
-            <div class="describe" v-else>
-                <dl>
-                    <dt>期号:</dt>
-                    <dd>{{item.periodsCode}}</dd>
-
-                    <dt>获得者:</dt>
-                    <dd class="blue">等待开奖</dd>
-
-                    <dt>开奖计时:</dt>
-                    <dd class="yellow">{{item.waitOpenTime}}</dd>
-                </dl>
+    <div class="newOpen">
+        <div class="weui-masonry" v-if="newList.length>0">
+            <div class="weui-masonry-item" v-for="item in newList">
+                <img :src="item.goodsLogo">
+                <p>{{item.goodsName}}</p>
+                <div class="describe" v-if="item.status!=1">
+                    <p><span>期号:</span><span class="blue">{{item.periodsCode}}</span></p>
+                    <p><span>获得者:</span><span>{{item.userName}}</span><span class="yellow">（{{item.luckyCode}}）</span>
+                    </p>
+                    <!--<p><span>参与人次:</span><span>{{item.userName}}</span></p>-->
+                    <p><span>开奖时间:</span><span style="font-size: 14px;">{{item.openTime2}}</span></p>
+                </div>
+                <div class="describe" v-else>
+                    <p><span>期号:</span><span class="blue">{{item.periodsCode}}</span></p>
+                    <p><span>获得者:</span><span>等待开奖</span></p>
+                    <p><span>开奖计时:</span><span style="font-size: 14px;">{{item.waitOpenTime2}}</span></p>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="NoData"  v-else>
-        <br>
+        <div class="NoData" v-else>
+            <br>
 
-        还没有哦，块去夺宝吧！
-        <br>
-        <br>
-        <router-link :to="'/home'"  class="weui-btn weui-btn_mini weui-btn_primary">去夺宝</router-link>
+            还没有哦，块去夺宝吧！
+            <br>
+            <br>
+            <router-link :to="'/home'" class="weui-btn weui-btn_mini weui-btn_primary">去夺宝</router-link>
+        </div>
     </div>
-</div>
 </template>
 
 <script>
+    import time from "../../../tools/time.js"
+
     export default {
         data() {
             return {
-                newList:[]
+                newList: [],
+                timer: null
             }
         },
         methods: {
-            getNewList:function () {
-                var self=this;
-                self.$http.get("DBPeriods/GetNewList").then(r=>{
-                    self.newList=r.body.data;
+            getNewList: function () {
+                var self = this;
+                self.$http.get("DBPeriods/GetNewList").then(r => {
+                    r.body.data.forEach(item => {
+                        item.openTime2 = time.TimeUp(item.openTime);
+                        item.waitOpenTime2 = time.TimeDown(item.waitOpenTime);
+                    });
+                    self.newList = r.body.data;
+                    self.timer = setInterval(function () {
+                        self.newList.forEach(item => {
+                            item.openTime2 = time.TimeUp(item.openTime);
+                            item.waitOpenTime2 = time.TimeDown(item.waitOpenTime);
+                        });
+                    }, 1000)
                 })
+
             }
         },
         created: function () {
@@ -68,70 +63,60 @@
         },
         mounted: function () {
 
+        },
+        destroyed: function () {
+            clearInterval(this.timer);
         }
     }
 </script>
 
 <style lang="scss">
-    .newOpen{
+    .newOpen {
         min-height: 100%;
         background-color: #f5f5f5;
 
-        .NoData{
+        .NoData {
             text-align: center;
             padding: 20px;
         }
-        .yellow{
+        .yellow {
             color: rgb(245, 102, 0);
         }
-        .blue{
-            color:blue;
+        .blue {
+            color: blue;
         }
-        .weui-masonry{
+        .weui-masonry {
 
             min-height: 100%;
-            column-count: 2; column-gap: 0;
-            .weui-masonry-item{
+            column-count: 2;
+            column-gap: 0;
+            .weui-masonry-item {
                 background-color: white;
                 break-inside: avoid;
                 padding: 10px;
-                text-align: center;
+                text-align: left;
                 border-bottom: 5px solid #f5f5f5;;
-                &:nth-child(odd){
+                &:nth-child(odd) {
                     margin-right: 2.5px;
                 }
-                &:nth-child(even){
+                &:nth-child(even) {
                     margin-left: 2.5px;
 
                 }
-                img{
-                    width: 80%;
+                img {
+                    width: 100%;
                 }
-                p{
+                p {
                     white-space: nowrap;
                     text-overflow: ellipsis;
                     overflow: hidden;
                 }
-                .describe{
-                    dl{
-                        overflow: hidden;
-                        width: 100%;
-                        color: #686868;
-                        font-size: 14px;
-                        dt{
-                            text-align: justify;
-                            text-align-last: justify;
-                            float: left;
-                            width: 75px;
-                        }
-                        dd{
-                            float: left;
-                            width: calc(50vw - 75px - 25px);
-                            text-align: left;
-                        }
+                .describe {
+                    p {
+                        text-align: left;
                     }
                 }
-                .weui-grid__icon{
+                .weui-grid__icon {
                     width: 100%;
                     height: auto;
                 }

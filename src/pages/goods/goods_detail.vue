@@ -1,24 +1,25 @@
 <template>
     <div class="goodsDetail">
         <div style="padding-bottom: 40px;height: 100%;overflow: auto;box-sizing: border-box">
-            <slider-com :images="goods.goodsLogo2" ></slider-com>
+            <slider-com :images="period.goodsLogo2"></slider-com>
             <div class="goods">
-                <p class="title">{{goods.goodsName}}</p>
-                <p class="describe">{{goods.goodsDescribe}}</p>
+                <p class="title">{{period.goodsName}}</p>
+                <p class="describe">{{period.goodsDescribe}}</p>
                 <div class="progress">
-                    <div class="progressBar" :style="{'width':(goods.needNum-goods.overplusNum)/goods.needNum*100+'%' }"></div>
+                    <div class="progressBar"
+                         :style="{'width':(period.needNum-period.overplusNum)/period.needNum*100+'%' }"></div>
                 </div>
                 <div class="information">
                     <div class="item">
-                        <p>{{goods.needNum}}</p>
+                        <p>{{period.needNum}}</p>
                         <p>总需</p>
                     </div>
                     <div class="item">
-                        <p>{{goods.needNum - goods.overplusNum}}</p>
+                        <p>{{period.needNum - period.overplusNum}}</p>
                         <p>已参与</p>
                     </div>
                     <div class="item">
-                        <p>{{goods.overplusNum}}</p>
+                        <p>{{period.overplusNum}}</p>
                         <p>剩余</p>
                     </div>
                 </div>
@@ -83,7 +84,7 @@
                 </div>
             </div>
             <div class="tips" style="color: #f56600">图文详情</div>
-            <div class="image-text" v-html="goods.goodsDetail">
+            <div class="image-text" v-html="period.goodsDetail">
                 <!--商品详情-->
             </div>
         </div>
@@ -92,12 +93,12 @@
                 <div style="width: 80px;border-right: 1px solid #ddd;" @click="goToHome"><i
                         class="iconfont icon-shouye"></i> 首页
                 </div>
-                <div style="width: 80px" @click="goToShopCart"><i class="iconfont icon-gouwuche"></i> 购物车</div>
-                <div class="weui-actionsheet__cell weui-flex__item" style="background-color:#fa0;padding: 1.5px 0;"
-                     @click="openActionSheet('join')">加入购物车
+                <div style="width: 80px;padding-left: 5px;position: relative;" @click="goToShopCart"><i class="iconfont icon-gouwuche"></i>
+                    购物车
+                    <span class="weui-badge" style="position: absolute;top: -.2em;right: -.4em;">{{shopCartNum}}</span>
                 </div>
                 <div class="weui-actionsheet__cell weui-flex__item" style="background-color:#f60;padding: 1.5px 0;"
-                     @click="openActionSheet('now')">立即购买
+                     @click="openActionSheet('join')">加入购物车
                 </div>
             </div>
         </div>
@@ -124,8 +125,6 @@
                 </div>
                 <div class="weui-actionsheet__action">
                     <div class="weui-actionsheet__cell success-btn" @click="submit">确定</div>
-
-
                 </div>
             </div>
         </div>
@@ -139,8 +138,9 @@
         data() {
             return {
                 actionSheet: false,
-                goods: {},
+                period: {},
                 selectNum: 1,
+                shopCartNum:0,
                 goToWhere: ''//跳转 now直接购买，join加入购物车
             }
         },
@@ -156,56 +156,56 @@
             },
             goToShopCart: function () {
                 this.$router.push({path: '/home/shopCart'})
-            }
-            ,
+            },
+            getshopCartNum: function (pid) {
+                var self = this;
+                self.$http.get("ShopCart/getshopCartNum?pid="+pid).then(res=>{
+                    self.shopCartNum=res.body.data;
+                })
+            },
             goToHome: function () {
                 this.$router.push({path: '/home/index'})
             }
             ,
             submit: function () {
-                if (this.goToWhere == 'now')
-                    this.$router.push({path: '/wxPaySuccess'})
-                else {
-                    var self = this;
-                    if(self.goods.overplusNum<1)
-                    {
-                        weui.topTips("该商品次数已满，请选择下一期参与夺宝！");
-                        return;
-                    }
-                    debugger
-                    self.$http.post("ShopCart/join", {
-                        DBPeriodsID: self.goods.id,
-                        Num: self.selectNum,
-                        Price: self.goods.perPrice,
-                        GoodsID: self.goods.goodsID
-                    }).then(response => {
-                        if(response.body.status){
-                            weui.toast(response.body.message, 3000);
-                            this.closeActionSheet();
-                        }else {
-                            weui.topTips(response.body.message)
-                        }
-
-                    })
-
+                var self = this;
+                if (self.period.overplusNum < 1) {
+                    weui.topTips("该商品次数已满，请选择下一期参与夺宝！");
+                    return;
                 }
+                self.$http.post("ShopCart/join", {
+                    DBPeriodsID: self.period.id,
+                    Num: self.selectNum,
+                    Price: self.period.perPrice,
+                    GoodsID: self.period.goodsID
+                }).then(response => {
+                    if (response.body.status) {
+                        weui.toast(response.body.message, 3000);
+                        // 获取购物车数量
+                        this.getshopCartNum(self.period.id);
+                        this.closeActionSheet();
+                    } else {
+                        weui.topTips(response.body.message)
+                    }
+
+                })
 
             },
             getGoodsDetail: function (id) {
                 var self = this;
                 self.$http.get("DBPeriods/" + id).then(response => {
                     response.body.data.goodsLogo2 = response.body.data.goodsLogo2.split(',')
-                    self.goods = response.body.data;
+                    self.period = response.body.data;
                 })
             },
             setNum: function (num) {
-                if (this.goods.overplusNum>num)
+                if (this.period.overplusNum > num)
                     this.selectNum = num;
                 else
-                    this.selectNum = this.goods.overplusNum;
+                    this.selectNum = this.period.overplusNum;
             },
             add: function () {
-                if (this.goods.overplusNum>this.selectNum)
+                if (this.period.overplusNum > this.selectNum)
                     this.selectNum++;
             },
             sub: function () {
@@ -216,6 +216,7 @@
         created: function () {
             var id = this.$route.query.id;
             this.getGoodsDetail(id);
+            this.getshopCartNum(id);
         },
         mounted: function () {
         },
@@ -380,20 +381,30 @@
         }
         .bottom {
             position: fixed;
-            bottom: 0px;
-            height: 44px;
+            bottom: 10px;
             width: 100%;
             text-align: center;
-            background-color: #fff;
             color: rgba(0, 0, 0, .72);
             font-weight: bold;
             font-size: 16px;
             line-height: 40px;
             z-index: 1001;
+            .weui-flex {
+                border-radius: 10px;
+                overflow: hidden;
+                margin: 0 10px;
+                box-sizing: border-box;
+                box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px rgba(0, 0, 0, .14), 0 1px 10px rgba(0, 0, 0, .12);
+                padding: 5px 0;
+                font-size: 14px;
+                background-color: #fff;
+            }
             .weui-flex__item {
                 color: #fff;
-                font-size: 16px;
+                font-size: 14px;
                 font-weight: normal;
+                border-radius: 22px;
+                margin: 0 30px;
             }
         }
 

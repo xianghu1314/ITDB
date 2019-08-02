@@ -32,18 +32,19 @@
                 </div>
                 <div class="weui-cell__bd">
                     <p>支付宝</p>
-                    <p>亿万用户的选择</p>
+                    <p>安全 可靠 放心</p>
                 </div>
             </label>
             <label class="weui-cell weui-check__label" for="x3">
                 <div class="weui-cell__hd select-hd">
-                    <input type="radio" checked @click="setPayMode(0)" checked class="weui-check" name="checkbox1" id="x3">
+                    <input type="radio" checked @click="setPayMode(0)" checked class="weui-check" name="checkbox1"
+                           id="x3">
                     <i class="weui-icon-checked"></i>
                     <img src="https://s1.mi.com/m/images/m/pay_yl1.png"/>
                 </div>
                 <div class="weui-cell__bd">
                     <p>余额支付</p>
-                    <p>亿万用户的选择</p>
+                    <p>随机立减</p>
                 </div>
             </label>
         </div>
@@ -57,18 +58,17 @@
                     <p style="font-size: 13px;color: #888888;text-overflow: ellipsis;">{{item.goodsDescribe}}</p>
                 </div>
                 <div class="weui-cell__ft">
-                    <br>
-                    <p>{{item.num + '*' + item.price + '=' + item.num * item.price}}</p>
+                    <p>
+                        <span style="font-size: 12px">{{item.num}}x</span>
+                        <span style="color: black">{{item.price.toFixed(2)}}</span>
+                    </p>
                 </div>
             </div>
         </div>
         <div class="footer">
             <div class="weui-flex">
-                <div style="width: 33%;text-align: center">
-                    <p><span style="color:#FF5722;font-weight: bold">￥{{ getTotalPrise}}</span>共1件</p>
-                </div>
-                <div class="weui-actionsheet__cell weui-flex__item"
-                     style="background-color: rgb(255, 170, 0); padding: 1.5px 0px;" @click="goToHome">再看看
+                <div style="width: 50%;text-align: center">
+                    <p style="color:#FF5722;">共1件 合计￥<span style="font-weight: 500">{{ getTotalPrise.toFixed(2)}}</span></p>
                 </div>
                 <div class="weui-actionsheet__cell weui-flex__item"
                      style="background-color: rgb(255, 102, 0); padding: 1.5px 0px;" @click="submit">去付款
@@ -101,15 +101,15 @@
             ,
             submit: function () {
                 var self = this;
-                var json=JSON.stringify(self.shopcart);
-                var shopcarts=JSON.parse(json);
-                var ids = self.$Enumerable.From(shopcarts).Select(s=>s.id) .ToArray();
+                var json = JSON.stringify(self.shopcart);
+                var shopcarts = JSON.parse(json);
+                var ids = self.$Enumerable.From(shopcarts).Select(s => s.id).ToArray();
                 self.$http.post("Order", {
                     ShopCartID: ids,
                     PayMode: self.payMode,
                     AddressID: self.address.id
                 }).then(r => {
-                    if (r.body.status){
+                    if (r.body.status) {
                         sessionStorage.removeItem("shopcart");
                         weui.toast(r.body.message);
                         self.$router.push("/wxPaySuccess")
@@ -121,12 +121,12 @@
             },
         },
         created: function () {
-            var self=this;
+            var self = this;
             self.shopcart = JSON.parse(sessionStorage.getItem("shopcart"));
             self.address = JSON.parse(sessionStorage.getItem("address"));
-            if(self.address==null)
-                self.$http.get("Address/GetDefault").then(r=>{
-                    self.address=r.body.data;
+            if (self.address == null)
+                self.$http.get("Address/GetDefault").then(r => {
+                    self.address = r.body.data;
                 })
         },
         computed: {
@@ -181,7 +181,7 @@
         .weui-cells {
             .weui-cell__hd {
                 input {
-                    &:checked+.weui-icon-checked {
+                    &:checked + .weui-icon-checked {
                         &:before {
                             content: '\EA06';
                             color: #09BB07;
@@ -240,6 +240,8 @@
             height: 44px;
             width: 100%;
             line-height: 44px;
+            box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px rgba(0, 0, 0, .14), 0 1px 10px rgba(0, 0, 0, .12);
+
             .weui-actionsheet__cell {
                 color: #fff;
             }

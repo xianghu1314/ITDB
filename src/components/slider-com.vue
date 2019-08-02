@@ -4,7 +4,7 @@
     <swiper :options="swiperOption" ref="mySwiper" >
         <!-- slides -->
         <swiper-slide v-for="(image,index) in images" :key="index">
-            <img :src="image">
+            <img :src="image" onerror="javascript:this.src='../../img/pandadb.jpg'">
         </swiper-slide>
         <!-- Optional controls -->
         <div class="swiper-pagination" slot="pagination"></div>
@@ -51,6 +51,15 @@
                 }
             }
         },
+        methods: {
+            // 存在的问题：如果默认图片也不存在，则继续触发 onerror，导致循环，故出现错误。如果图片存在，但网络很不通畅，也可能触发 onerror。
+            // nofind: function () {
+            //     var img = event.srcElement;
+            //     img.src = "http://mat1.gtimg.com/cd/2017/home/nlogo0518.png"; //替换的图片
+            //     img.οnerrοr = null; //控制不要一直触发错误
+            // },
+
+        },
         computed: {
             swiper() {
                 return this.$refs.mySwiper.swiper
@@ -68,6 +77,7 @@
     .swiper-container {
         width: 100%;
         /*height: 250px;*/
+        max-height: 200px;
         margin-bottom: 10px;
     }
 </style>

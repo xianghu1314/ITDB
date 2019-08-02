@@ -14,9 +14,12 @@
                         <p style="font-size: 13px; color: rgb(136, 136, 136);">商品期数：{{item.periodsCode}}</p>
                         <p style="font-size: 13px; color: rgb(136, 136, 136);">参与次数：{{item.times}}</p>
                     </div>
-                    <!--<div class="weui-cell__ft">-->
-                    <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary">在买点</a>-->
-                    <!--</div>-->
+                    <div class="weui-cell__ft">
+                        <a v-if="item.status===0" href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary">进行中</a>
+                        <a v-else-if="item.status===1" href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary">待开奖</a>
+                        <a v-else-if="item.status===2" href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary">已开奖</a>
+                        <a v-else href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary">开奖失败</a>
+                    </div>
                 </div>
                 <div class=" weui-cell__bm">
                     <div class="weui-flex">
@@ -33,8 +36,9 @@
                         <!--<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary" >在买点</a>-->
                     </div>
                     <div>
-                        <label :for="'x'+index" class="shownumber">查看号码 <i class="iconfont icon-xiala"></i></label>
-                        <label :for="'xx'+index" class="shownumber">已开奖 <i class="iconfont icon-xiala"></i></label>
+                        <label :for="'x'+index" class="shownumber">我的号码 <i class="iconfont icon-xiala"></i></label>
+                        <!--0 进行中 1正在开奖中2开奖成功3开奖失败-->
+                        <label v-if="item.status==2" :for="'xx'+index" class="shownumber">已开奖 <i class="iconfont icon-xiala"></i></label>
                     </div>
                     <input type="checkbox" :id="'x'+index">
                     <div class="list-describe">

@@ -124,7 +124,7 @@
         },
         created: function () {
             //this.getLocation();
-            if (this.$route.params.userPhone) this.ifAdd=false;
+            if (this.$route.params&&this.$route.params.userPhone) this.ifAdd=false;
             this.address=this.$route.params;
 
         }

@@ -10,10 +10,10 @@
                 <div v-for="(item ,index) in goodsList" class="weui-item">
                     <div @click="calcPrise()" class="weui-cell" v-bind:for="index">
                         <div class="weui-cell__hd">
-                            <img src="src/assets/logo.png" style="width:60px;margin-right:5px;display:block"/></div>
+                            <img :src="item.goodsLogo" style="width:60px;margin-right:5px;display:block"/></div>
                         <div class="weui-cell__bd">
                             <p>{{item.goodsName}}</p>
-                            <p style="font-size: 13px; color: rgb(136, 136, 136);">{{item.goodsDetail}}</p>
+                            <p style="font-size: 13px; color: rgb(136, 136, 136);">{{item.GoodsDescribe}}</p>
                             <p style="font-size: 13px; color: rgb(136, 136, 136);">总需：{{item.needNum}}</p>
                             <p style="font-size: 13px; color: rgb(136, 136, 136);">商品期数:{{item.periodsCode}}</p>
                         </div>
@@ -45,7 +45,7 @@
         methods: {
             getNewList:function () {
                 var self=this;
-                self.$http.get("DBPeriods/GetNewList").then(r=>{
+                self.$http.get("DBPeriods/GetLuckyList").then(r=>{
                     self.goodsList=r.body.data;
                 })
             }

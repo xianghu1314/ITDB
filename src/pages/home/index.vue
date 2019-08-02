@@ -61,18 +61,10 @@
                     self.$refs.my_scroller.finishPullToRefresh()
                 });
             },
-            changeCategory: function (index) {
-                var self = this;
-                self.CurrentIndex = index;
-                self.pageIndex = 0;
-                self.pageSize = 20;
-                self.getGoods(function () {
-                    self.$refs.my_scroller.finishPullToRefresh()
-                });
-            },
             //上拉
             infinite: function (done) {
-                var self = this
+                var self = this;
+                self.pageIndex++;
                 self.getGoods(function () {
                     self.$refs.my_scroller.finishInfinite(true);
                 });
@@ -86,6 +78,7 @@
                             defaultIndex: 0,
                             onChange: function(index){
                                 self.CurrentIndex = index;
+                                self.$refs.my_scroller.scrollTo(0,0);
                                 self.pageIndex = 0;
                                 self.pageSize = 20;
                                 self.getGoods(function () {
@@ -122,11 +115,12 @@
                         self.GoodsList = r.body.data;
 
                     } else {
-                        if (r.body.data.length === 0) {
-                            weui.toast('没有更多了', 3000);
-                        } else {
-                            self.GoodsList = self.GoodsList.concat(r.body.data);
-                        }
+                        // if (r.body.data.length === 0) {
+                        //     weui.toast('没有更多了', 3000);
+                        // } else {
+                        //     self.GoodsList = self.GoodsList.concat(r.body.data);
+                        // }
+                        self.GoodsList = self.GoodsList.concat(r.body.data);
                     }
                 });
             }

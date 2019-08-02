@@ -6,18 +6,18 @@
                 <div class="weui-cells weui-cells_checkbox" v-if="shopCarList.length>0">
                     <div @click="calcPrise()" class="weui-cell weui-check__label" v-for="(item ,index) in shopCarList">
                         <label class="weui-cell__hd select-hd" v-bind:for="index">
-                            <input type="checkbox" class="weui-check" name="checkbox1" v-bind:id="index">
+                            <input type="checkbox" class="weui-check" name="checkbox1" v-bind:id="index" checked>
                             <i class="weui-icon-checked"></i><img :src="item.goodsLogo"/>
                         </label>
                         <label class="weui-cell__bd" v-bind:for="index">
                             <p>{{ '【第' + item.periodsCode + '期】' + item.goodsName}}</p>
                             <p>{{item.goodsDescribe}}</p>
                         </label>
-                        <div class="weui-cell__ft">
+                        <div class="weui-cell__ft" style="margin-top: 20px">
                             <br>
                             <div class="weui-flex">
                                 <div class="weui-flex__item" v-on:click="sub(item,index)">-</div>
-                                <div class="weui-flex__item">{{item.num}}</div>
+                                <div class="weui-flex__item" style="width: 45px !important;">{{item.num}}</div>
                                 <div class="weui-flex__item" v-on:click="add(item,index)">+</div>
                             </div>
                         </div>
@@ -34,13 +34,13 @@
             <div class="weui-cells weui-cells_checkbox">
                 <div class="weui-cell weui-check__label">
                     <label class="weui-cell__hd" for="all">
-                        <input type="checkbox" id="all" class="weui-check" name="checkbox1" @click="selectAll">
+                        <input type="checkbox" id="all" class="weui-check" name="checkbox1" @click="selectAll" checked>
                         <i class="weui-icon-checked"></i>
                         <span>全选</span>
                     </label>
                     <div class="weui-cell__bd">
                         合计<span style="color: #f9650b">￥<span
-                            style="font-weight: 700;font-size: 20px">{{totalPrise}}</span></span>
+                            style="font-weight: 700;font-size: 20px">{{totalPrise.toFixed(2)}}</span></span>
                     </div>
                     <div class="weui-cell__ft">
                         <transition name="fade">
@@ -48,7 +48,7 @@
                                 移除
                             </div>
                             <div class="calc" v-else @click="paySelect">
-                                结算
+                                去结算
                             </div>
                         </transition>
                     </div>
@@ -71,7 +71,7 @@
             add: function (item, index) {
                 var self = this;
                 self.$http.post("ShopCart/add", {ID: item.id}).then(response => {
-                    if(response.body.status)
+                    if (response.body.status)
                         item.num++;
                     else
                         weui.topTips(response.body.message);
@@ -99,9 +99,9 @@
                     weui.topTips("请勾选需要结算的商品");
                     return;
                 }
-                var json=JSON.stringify(selected);
-                sessionStorage.setItem("shopcart",json)
-                this.$router.push({ name: "paymentMode" });
+                var json = JSON.stringify(selected);
+                sessionStorage.setItem("shopcart", json)
+                this.$router.push({name: "paymentMode"});
 
             },
             removeSelect: function () {
@@ -145,6 +145,7 @@
                 var total = 0;
                 var checkbox = document.getElementsByTagName("input");
                 for (var i = 0; i < checkbox.length - 1; i++) {
+                    debugger
                     if (checkbox[i].checked == true) {
                         total += self.shopCarList[i].num * self.shopCarList[i].price;
                     }
@@ -155,6 +156,8 @@
                 var self = this;
                 self.$http.get("ShopCart/getShopCart").then(response => {
                     self.shopCarList = response.body.data;
+                    // 计算价格
+                    self.shopCarList.forEach(item=>self.totalPrise+=item.num*item.price)
                 })
             },
             getSelected: function () {
@@ -238,16 +241,16 @@
         }
         .footer {
             display: flex;
-            height: 44px;
             width: 100%;
-            box-sizing: border-box;
-            div {
-                height: 100%;
-            }
+            padding-bottom: 10px;
             .weui-cells {
                 padding-left: 10px;
                 line-height: 44px;
                 width: 100%;
+                box-sizing: border-box;
+                margin: 0 10px;
+                border-radius: 10px;
+                box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px rgba(0, 0, 0, .14), 0 1px 10px rgba(0, 0, 0, .12);
                 .weui-cell {
                     padding: 0px;
                     height: 100%;
@@ -261,6 +264,11 @@
 
                     }
                     .weui-cell__ft {
+                        border-radius: 22px;
+                        overflow: hidden;
+                        margin: 10px;
+                        box-sizing: border-box;
+
                         .calc {
                             background-color: #f9650b;
                             padding: 0 45px;

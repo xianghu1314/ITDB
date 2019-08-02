@@ -2,10 +2,10 @@
     <div class="mine">
         <div class="user-info">
             <div class="user-head">
-                <img v-bind:src="user.userLogo" alt="" @click="goTo('/setting')">
+                <img v-bind:src="user.userLogo" @click="goTo('/setting')">
             </div>
             <div class="user-name">
-                <h4 v-if="user.userName!=undefined">{{user.userName}}</h4>
+                <h4 v-if="user.userName" style="color: #fff;">{{user.userName}}</h4>
                 <router-link v-else :to="'/login'" class="user-login-btn">登陆/注册</router-link>
             </div>
         </div>
@@ -21,12 +21,20 @@
                     <span>{{user.userBalance}}</span>
                 </div>
             </a>
-            <a href="javascript:;" class="weui-cell weui-cell_access">
+            <!--<a href="javascript:;" class="weui-cell weui-cell_access">-->
+                <!--<div class="weui-cell__hd">-->
+                    <!--<i class="iconfont icon-shaidan" style="background-color: #6cdb56"></i>-->
+                <!--</div>-->
+                <!--<div class="weui-cell__bd">-->
+                    <!--<p>晒单</p>-->
+                <!--</div>-->
+            <!--</a>-->
+            <a @click="goTo('/lucky')" class="weui-cell weui-cell_access">
                 <div class="weui-cell__hd">
-                    <i class="iconfont icon-shaidan" style="background-color: #6cdb56"></i>
+                    <i class="iconfont icon-zhongjiangjilu" style="background-color: #eeb468"></i>
                 </div>
                 <div class="weui-cell__bd">
-                    <p>晒单</p>
+                    <p>中奖记录</p>
                 </div>
             </a>
         </div>
@@ -39,14 +47,14 @@
                     <p>夺宝记录</p>
                 </div>
             </a>
-            <a @click="goTo('/lucky')" class="weui-cell weui-cell_access">
-                <div class="weui-cell__hd">
-                    <i class="iconfont icon-zhongjiangjilu" style="background-color: #eeb468"></i>
-                </div>
-                <div class="weui-cell__bd">
-                    <p>中奖记录</p>
-                </div>
-            </a>
+            <!--<a @click="goTo('/lucky')" class="weui-cell weui-cell_access">-->
+                <!--<div class="weui-cell__hd">-->
+                    <!--<i class="iconfont icon-zhongjiangjilu" style="background-color: #eeb468"></i>-->
+                <!--</div>-->
+                <!--<div class="weui-cell__bd">-->
+                    <!--<p>中奖记录</p>-->
+                <!--</div>-->
+            <!--</a>-->
             <a @click="goTo('/address')" class="weui-cell weui-cell_access">
                 <div class="weui-cell__hd">
                     <i class="iconfont icon-shouhuodizhi" style="background-color: #71c0c0"></i>
